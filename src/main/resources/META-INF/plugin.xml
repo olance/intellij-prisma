@@ -1,0 +1,25 @@
+<idea-plugin>
+    <id>io.techtrails.intellij.prisma</id>
+    <name>Prisma Support</name>
+    <vendor email="olivier@techtrails.io" url="http://www.techtrails.io">Techtrails</vendor>
+
+    <description><![CDATA[
+    Adds support for Prisma 2 schema files (.prisma):
+    <ul>
+        <li>Syntax highlighting</li>
+    </ul>
+    ]]></description>
+
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.lang</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <fileType name="Prisma" implementationClass="io.techtrails.intellij.prisma.PrismaFileType"
+                  fieldName="INSTANCE" language="Prisma" extensions="prisma"/>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+</idea-plugin>
