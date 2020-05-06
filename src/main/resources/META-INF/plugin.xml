@@ -17,6 +17,8 @@
     <extensions defaultExtensionNs="com.intellij">
         <fileType name="Prisma" implementationClass="io.techtrails.intellij.prisma.PrismaFileType"
                   fieldName="INSTANCE" language="Prisma" extensions="prisma"/>
+        <lang.parserDefinition language="Prisma"
+                               implementationClass="io.techtrails.intellij.prisma.PrismaParserDefinition"/>
     </extensions>
 
     <actions>

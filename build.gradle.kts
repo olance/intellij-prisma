@@ -19,6 +19,14 @@ intellij {
     version = "2020.1.1"
     pluginName = rootProject.name
 }
+
+sourceSets["main"].java.srcDir("src/main/gen")
+
+tasks.withType<JavaCompile> {
+    sourceCompatibility = "1.8"
+    targetCompatibility = "1.8"
+}
+
 tasks {
     compileKotlin {
         kotlinOptions.jvmTarget = "1.8"
@@ -27,6 +35,7 @@ tasks {
         kotlinOptions.jvmTarget = "1.8"
     }
 }
+
 tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml") {
     changeNotes("""
       Add change notes here.<br>
