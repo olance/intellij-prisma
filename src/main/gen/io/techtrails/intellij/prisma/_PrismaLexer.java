@@ -25,16 +25,6 @@ public class _PrismaLexer implements FlexLexer {
 
   /** lexical states */
   public static final int YYINITIAL = 0;
-  public static final int BLOCK_DEF_KEYWORD = 2;
-  public static final int AFTER_BLOCK_NAME = 4;
-  public static final int AFTER_FIELD_NAME = 6;
-  public static final int BEFORE_FIELD_VALUE = 8;
-  public static final int STRING_FIELD_VALUE = 10;
-  public static final int DATASOURCE_FIELDS = 12;
-  public static final int DATASOURCE_PROVIDER_VALUE = 14;
-  public static final int GENERATOR_FIELDS = 16;
-  public static final int MODEL_FIELDS = 18;
-  public static final int ENUM_FIELDS = 20;
 
   /**
    * ZZ_LEXSTATE[l] is the state in the DFA for the lexical state l
@@ -43,8 +33,7 @@ public class _PrismaLexer implements FlexLexer {
    * l is of the form l = 2*k, k a non negative integer
    */
   private static final int ZZ_LEXSTATE[] = { 
-     0,  0,  1,  1,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7, 
-     8,  8,  8,  8,  8, 8
+     0, 0
   };
 
   /** 
@@ -66,10 +55,11 @@ public class _PrismaLexer implements FlexLexer {
 
   /* The ZZ_CMAP_A table has 640 entries */
   static final char ZZ_CMAP_A[] = zzUnpackCMap(
-    "\11\0\1\2\4\1\22\0\1\2\1\0\1\3\14\0\1\15\12\14\3\0\1\32\3\0\32\10\4\0\1\14"+
-    "\1\0\1\11\1\10\1\20\1\16\1\7\1\10\1\21\1\10\1\27\2\10\1\12\1\23\1\22\1\17"+
-    "\1\25\1\31\1\5\1\13\1\4\1\6\1\26\2\10\1\30\1\10\1\24\1\0\1\33\7\0\1\1\32\0"+
-    "\1\2\337\0\1\2\177\0\13\2\35\0\2\1\5\0\1\2\57\0\1\2\40\0");
+    "\11\0\1\2\4\1\22\0\1\2\1\0\1\5\4\0\1\3\1\25\1\32\2\0\1\33\1\0\1\17\1\20\12"+
+    "\16\1\36\2\0\1\34\1\0\1\35\1\21\32\23\1\30\1\4\1\31\1\0\1\24\1\0\1\13\1\22"+
+    "\1\41\1\37\1\11\1\12\1\42\1\22\1\47\2\22\1\14\1\44\1\43\1\40\1\45\1\22\1\7"+
+    "\1\15\1\6\1\10\1\46\4\22\1\26\1\0\1\27\7\0\1\1\32\0\1\2\337\0\1\2\177\0\13"+
+    "\2\35\0\2\1\5\0\1\2\57\0\1\2\40\0");
 
   /** 
    * Translates DFA states to action switch labels.
@@ -77,13 +67,16 @@ public class _PrismaLexer implements FlexLexer {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\11\0\1\1\1\2\5\1\1\3\1\4\1\5\1\6"+
-    "\2\1\1\7\1\1\1\0\1\10\11\0\1\10\1\11"+
-    "\3\0\1\12\4\0\1\13\26\0\1\14\3\0\1\15"+
-    "\1\0";
+    "\1\0\1\1\1\2\2\1\5\3\1\4\3\1\1\3"+
+    "\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14"+
+    "\1\15\1\16\5\3\1\0\1\17\3\0\1\3\1\20"+
+    "\3\3\1\0\1\4\1\21\1\22\1\0\1\23\5\3"+
+    "\1\17\1\3\1\24\2\3\1\21\1\25\1\26\5\3"+
+    "\1\27\1\30\10\3\1\31\2\3\1\32\7\3\1\33"+
+    "\1\3\1\34\1\35";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[74];
+    int [] result = new int[89];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -108,19 +101,21 @@ public class _PrismaLexer implements FlexLexer {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\34\0\70\0\124\0\160\0\214\0\250\0\304"+
-    "\0\340\0\374\0\u0118\0\u0134\0\u0150\0\u016c\0\u0188\0\u01a4"+
-    "\0\u01c0\0\374\0\374\0\u01dc\0\u01f8\0\u0214\0\374\0\u0230"+
-    "\0\u024c\0\u0268\0\u0284\0\u02a0\0\u02bc\0\u02d8\0\u02f4\0\u0310"+
-    "\0\u032c\0\u0348\0\u0364\0\u0380\0\u039c\0\u03b8\0\u03d4\0\u03f0"+
-    "\0\374\0\u040c\0\u0428\0\u0444\0\u0460\0\374\0\u047c\0\u0498"+
-    "\0\u04b4\0\u04d0\0\u04ec\0\u0508\0\u0524\0\u0540\0\u055c\0\u0578"+
-    "\0\u0594\0\u05b0\0\u05cc\0\u05e8\0\u0604\0\u0620\0\u063c\0\u0658"+
-    "\0\u0674\0\u0690\0\u06ac\0\u06c8\0\374\0\u06e4\0\u0700\0\u071c"+
-    "\0\374\0\u0738";
+    "\0\0\0\50\0\120\0\170\0\240\0\310\0\360\0\u0118"+
+    "\0\u0140\0\u0168\0\u0190\0\u01b8\0\u01e0\0\u0208\0\u0230\0\50"+
+    "\0\50\0\50\0\u0258\0\50\0\50\0\50\0\50\0\50"+
+    "\0\50\0\u0280\0\u02a8\0\u02d0\0\u02f8\0\u0320\0\170\0\50"+
+    "\0\u0348\0\240\0\u0370\0\u0398\0\50\0\u03c0\0\u03e8\0\u0410"+
+    "\0\u01b8\0\u01b8\0\u0438\0\u0460\0\u0488\0\50\0\u04b0\0\u04d8"+
+    "\0\u0500\0\u0528\0\u0550\0\240\0\u0578\0\360\0\u05a0\0\u05c8"+
+    "\0\u05f0\0\u0618\0\u0488\0\u0640\0\u0668\0\u0690\0\u06b8\0\u06e0"+
+    "\0\360\0\360\0\u0708\0\u0730\0\u0758\0\u0780\0\u07a8\0\u07d0"+
+    "\0\u07f8\0\u0820\0\360\0\u0848\0\u0870\0\360\0\u0898\0\u08c0"+
+    "\0\u08e8\0\u0910\0\u0938\0\u0960\0\u0988\0\360\0\u09b0\0\360"+
+    "\0\360";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[74];
+    int [] result = new int[89];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -143,32 +138,82 @@ public class _PrismaLexer implements FlexLexer {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\12\2\13\4\12\1\14\5\12\1\15\1\16\2\12"+
-    "\1\17\1\12\1\20\11\12\2\13\1\12\10\21\2\12"+
-    "\6\21\1\12\5\21\3\12\2\13\21\12\1\22\10\12"+
-    "\2\13\27\12\1\23\2\12\2\24\66\12\2\13\3\12"+
-    "\1\25\6\12\1\15\7\12\1\26\5\12\1\27\3\12"+
-    "\1\30\31\12\2\13\12\12\1\15\15\12\1\27\35\0"+
-    "\2\13\53\0\1\31\26\0\1\32\27\0\1\33\31\0"+
-    "\1\34\43\0\1\35\20\0\11\21\1\0\6\21\1\0"+
-    "\5\21\3\0\2\24\36\0\1\36\33\0\1\37\41\0"+
-    "\1\40\7\0\1\41\1\0\1\42\14\0\1\43\25\0"+
-    "\1\44\1\0\13\44\1\45\16\44\4\0\1\46\51\0"+
-    "\1\47\27\0\1\50\27\0\1\51\40\0\1\52\45\0"+
-    "\1\53\32\0\1\54\22\0\1\55\37\0\1\56\10\0"+
-    "\1\44\1\0\32\44\1\45\1\0\32\45\11\0\1\57"+
-    "\31\0\1\60\33\0\1\61\52\0\1\62\17\0\1\63"+
-    "\34\0\1\64\33\0\1\65\33\0\1\66\25\0\1\67"+
-    "\40\0\1\56\50\0\1\70\33\0\1\71\35\0\1\72"+
-    "\6\0\1\73\46\0\1\74\25\0\1\75\40\0\1\76"+
-    "\21\0\1\77\41\0\1\100\42\0\1\101\20\0\1\102"+
-    "\31\0\1\103\36\0\1\104\33\0\1\100\27\0\1\105"+
-    "\35\0\1\106\33\0\1\107\45\0\1\110\21\0\1\111"+
-    "\35\0\1\54\44\0\1\112\20\0\1\56\35\0\1\56"+
-    "\24\0";
+    "\1\2\2\3\1\4\1\2\1\5\1\6\1\7\1\10"+
+    "\1\11\1\12\3\7\1\13\1\14\1\15\1\16\1\7"+
+    "\1\17\1\2\1\20\1\21\1\22\1\23\1\24\1\25"+
+    "\1\26\1\27\1\30\1\31\1\32\1\33\1\7\1\34"+
+    "\1\7\1\35\1\36\2\7\51\0\2\3\45\0\3\37"+
+    "\1\40\1\41\43\37\4\42\1\43\1\40\42\42\6\0"+
+    "\1\7\1\44\6\7\1\17\3\0\1\7\2\17\1\45"+
+    "\11\0\11\7\6\0\10\7\1\17\3\0\1\7\2\17"+
+    "\1\45\11\0\11\7\6\0\1\7\1\46\6\7\1\17"+
+    "\3\0\1\7\2\17\1\45\11\0\11\7\6\0\10\7"+
+    "\1\17\3\0\1\7\2\17\1\45\11\0\4\7\1\47"+
+    "\4\7\6\0\5\7\1\50\2\7\1\17\3\0\1\7"+
+    "\2\17\1\45\11\0\11\7\16\0\1\13\1\51\46\0"+
+    "\1\52\51\0\1\53\35\0\10\54\3\0\1\55\1\54"+
+    "\14\0\11\54\6\0\11\17\3\0\3\17\12\0\11\17"+
+    "\31\0\1\56\24\0\5\7\1\57\2\7\1\17\3\0"+
+    "\1\7\2\17\1\45\11\0\11\7\6\0\2\7\1\60"+
+    "\5\7\1\17\3\0\1\7\2\17\1\45\11\0\11\7"+
+    "\6\0\3\7\1\61\4\7\1\17\3\0\1\7\2\17"+
+    "\1\45\11\0\11\7\6\0\10\7\1\17\3\0\1\7"+
+    "\2\17\1\45\11\0\1\7\1\62\7\7\6\0\1\7"+
+    "\1\63\6\7\1\17\3\0\1\7\2\17\1\45\11\0"+
+    "\11\7\1\37\1\0\46\37\4\42\1\43\1\64\42\42"+
+    "\6\0\2\7\1\65\5\7\1\17\3\0\1\7\2\17"+
+    "\1\45\11\0\11\7\6\0\6\7\1\66\1\7\1\17"+
+    "\3\0\1\7\2\17\1\45\11\0\11\7\6\0\2\7"+
+    "\1\67\5\7\1\17\3\0\1\7\2\17\1\45\11\0"+
+    "\11\7\6\0\6\7\1\70\1\7\1\17\3\0\1\7"+
+    "\2\17\1\45\11\0\11\7\1\71\1\0\16\71\1\72"+
+    "\27\71\6\0\10\54\4\0\1\54\14\0\11\54\6\0"+
+    "\10\73\4\0\1\73\14\0\11\73\6\0\1\74\7\7"+
+    "\1\17\3\0\1\7\2\17\1\45\11\0\11\7\6\0"+
+    "\1\75\7\7\1\17\3\0\1\7\2\17\1\45\11\0"+
+    "\11\7\6\0\10\7\1\17\3\0\1\7\2\17\1\45"+
+    "\11\0\4\7\1\76\4\7\6\0\10\7\1\17\3\0"+
+    "\1\7\2\17\1\45\11\0\1\77\10\7\6\0\10\7"+
+    "\1\17\3\0\1\7\2\17\1\45\11\0\1\7\1\100"+
+    "\7\7\6\0\3\7\1\101\4\7\1\17\3\0\1\7"+
+    "\2\17\1\45\11\0\11\7\6\0\10\7\1\17\3\0"+
+    "\1\7\2\17\1\45\11\0\5\7\1\102\3\7\6\0"+
+    "\7\7\1\65\1\17\3\0\1\7\2\17\1\45\11\0"+
+    "\11\7\1\71\1\0\46\71\1\72\1\0\46\72\6\0"+
+    "\5\7\1\103\2\7\1\17\3\0\1\7\2\17\1\45"+
+    "\11\0\11\7\6\0\10\7\1\17\3\0\1\7\2\17"+
+    "\1\45\11\0\6\7\1\104\2\7\6\0\3\7\1\105"+
+    "\4\7\1\17\3\0\1\7\2\17\1\45\11\0\11\7"+
+    "\6\0\3\7\1\106\4\7\1\17\3\0\1\7\2\17"+
+    "\1\45\11\0\11\7\6\0\10\7\1\17\3\0\1\7"+
+    "\2\17\1\45\11\0\7\7\1\107\1\7\6\0\7\7"+
+    "\1\110\1\17\3\0\1\7\2\17\1\45\11\0\11\7"+
+    "\6\0\2\7\1\111\5\7\1\17\3\0\1\7\2\17"+
+    "\1\45\11\0\11\7\6\0\1\7\1\112\6\7\1\17"+
+    "\3\0\1\7\2\17\1\45\11\0\11\7\6\0\6\7"+
+    "\1\113\1\7\1\17\3\0\1\7\2\17\1\45\11\0"+
+    "\11\7\6\0\10\7\1\17\3\0\1\7\2\17\1\45"+
+    "\11\0\10\7\1\114\6\0\10\7\1\17\3\0\1\7"+
+    "\2\17\1\45\11\0\1\7\1\115\7\7\6\0\1\116"+
+    "\7\7\1\17\3\0\1\7\2\17\1\45\11\0\11\7"+
+    "\6\0\5\7\1\117\2\7\1\17\3\0\1\7\2\17"+
+    "\1\45\11\0\11\7\6\0\10\7\1\17\3\0\1\7"+
+    "\2\17\1\45\11\0\1\120\10\7\6\0\2\7\1\121"+
+    "\5\7\1\17\3\0\1\7\2\17\1\45\11\0\11\7"+
+    "\6\0\1\122\7\7\1\17\3\0\1\7\2\17\1\45"+
+    "\11\0\11\7\6\0\3\7\1\123\4\7\1\17\3\0"+
+    "\1\7\2\17\1\45\11\0\11\7\6\0\1\7\1\124"+
+    "\6\7\1\17\3\0\1\7\2\17\1\45\11\0\11\7"+
+    "\6\0\10\7\1\17\3\0\1\7\2\17\1\45\11\0"+
+    "\1\7\1\125\7\7\6\0\1\7\1\126\6\7\1\17"+
+    "\3\0\1\7\2\17\1\45\11\0\11\7\6\0\10\7"+
+    "\1\17\3\0\1\7\2\17\1\45\11\0\2\7\1\127"+
+    "\6\7\6\0\1\7\1\130\6\7\1\17\3\0\1\7"+
+    "\2\17\1\45\11\0\11\7\6\0\3\7\1\131\4\7"+
+    "\1\17\3\0\1\7\2\17\1\45\11\0\11\7";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[1876];
+    int [] result = new int[2520];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -206,12 +251,12 @@ public class _PrismaLexer implements FlexLexer {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\11\0\1\11\7\1\2\11\3\1\1\11\1\1\1\0"+
-    "\1\1\11\0\2\1\3\0\1\11\4\0\1\11\26\0"+
-    "\1\11\3\0\1\11\1\0";
+    "\1\0\1\11\15\1\3\11\1\1\6\11\5\1\1\0"+
+    "\1\11\3\0\1\1\1\11\3\1\1\0\3\1\1\0"+
+    "\1\11\53\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[74];
+    int [] result = new int[89];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -267,51 +312,6 @@ public class _PrismaLexer implements FlexLexer {
   private boolean zzEOFDone;
 
   /* user code: */
-    IElementType currentBlock = null;
-    public IElementType currentBlockForKeyword(String keyword) {
-        if (keyword == "datasource") {
-            return DATASOURCE_BLOCK;
-        } else if (keyword == "generator") {
-            return GENERATOR_BLOCK;
-        } else if (keyword == "model") {
-            return MODEL_BLOCK;
-        } else if (keyword == "enum") {
-            return ENUM_BLOCK;
-        }
-
-        return null;
-    }
-
-    public IElementType blockKeywordToken(String keyword) {
-        if (keyword == "datasource") {
-            return KEYWORD_DATASOURCE;
-        } else if (keyword == "generator") {
-            return KEYWORD_GENERATOR;
-        } else if (keyword == "model") {
-            return KEYWORD_MODEL;
-        } else if (keyword == "enum") {
-            return KEYWORD_ENUM;
-        }
-
-        return null;
-    }
-
-    public int fieldsStateForBlock(IElementType block) {
-        if (block == DATASOURCE_BLOCK) {
-            return DATASOURCE_FIELDS;
-        } else if (block == GENERATOR_BLOCK) {
-            return GENERATOR_FIELDS;
-        } else if (block == MODEL_BLOCK) {
-            return MODEL_FIELDS;
-        } else if (block == ENUM_BLOCK) {
-            return ENUM_FIELDS;
-        }
-
-        return 0;
-    }
-
-    int fieldValueState = 0;
-
     public _PrismaLexer() {
         this((java.io.Reader)null);
     }
@@ -472,19 +472,6 @@ public class _PrismaLexer implements FlexLexer {
 
 
   /**
-   * Contains user EOF-code, which will be executed exactly once,
-   * when the end of file is reached
-   */
-  private void zzDoEOF() {
-    if (!zzEOFDone) {
-      zzEOFDone = true;
-        return;
-
-    }
-  }
-
-
-  /**
    * Resumes scanning until the next regular expression is matched,
    * the end of input is encountered or an I/O-Error occurs.
    *
@@ -570,7 +557,6 @@ public class _PrismaLexer implements FlexLexer {
 
       if (zzInput == YYEOF && zzStartRead == zzCurrentPos) {
         zzAtEOF = true;
-        zzDoEOF();
         return null;
       }
       else {
@@ -579,69 +565,147 @@ public class _PrismaLexer implements FlexLexer {
             { return BAD_CHARACTER;
             } 
             // fall through
-          case 14: break;
+          case 30: break;
           case 2: 
             { return WHITE_SPACE;
             } 
             // fall through
-          case 15: break;
+          case 31: break;
           case 3: 
-            { yybegin(AFTER_BLOCK_NAME); return ENTITY_NAME;
+            { return ENTITY_NAME;
             } 
             // fall through
-          case 16: break;
+          case 32: break;
           case 4: 
-            { yybegin(fieldsStateForBlock(currentBlock)); return L_CURLY;
+            { return NUMBER;
             } 
             // fall through
-          case 17: break;
+          case 33: break;
           case 5: 
-            { yybegin(BEFORE_FIELD_VALUE); return EQ;
+            { return L_PAREN;
             } 
             // fall through
-          case 18: break;
+          case 34: break;
           case 6: 
-            { yybegin(fieldValueState); return WHITE_SPACE;
+            { return L_CURLY;
             } 
             // fall through
-          case 19: break;
+          case 35: break;
           case 7: 
-            { yybegin(YYINITIAL); currentBlock = null; return R_CURLY;
+            { return R_CURLY;
             } 
             // fall through
-          case 20: break;
+          case 36: break;
           case 8: 
+            { return L_BRACKET;
+            } 
+            // fall through
+          case 37: break;
+          case 9: 
+            { return R_BRACKET;
+            } 
+            // fall through
+          case 38: break;
+          case 10: 
+            { return R_PAREN;
+            } 
+            // fall through
+          case 39: break;
+          case 11: 
+            { return COMMA;
+            } 
+            // fall through
+          case 40: break;
+          case 12: 
+            { return EQ;
+            } 
+            // fall through
+          case 41: break;
+          case 13: 
+            { return QUESTION_MARK;
+            } 
+            // fall through
+          case 42: break;
+          case 14: 
+            { return COLON;
+            } 
+            // fall through
+          case 43: break;
+          case 15: 
+            { return STRING;
+            } 
+            // fall through
+          case 44: break;
+          case 16: 
+            { return FUNCTION_CALL;
+            } 
+            // fall through
+          case 45: break;
+          case 17: 
             { return DOUBLE_COMMENT;
             } 
             // fall through
-          case 21: break;
-          case 9: 
+          case 46: break;
+          case 18: 
+            { return MODEL_FIELD_ATTRIBUTE_NAME;
+            } 
+            // fall through
+          case 47: break;
+          case 19: 
+            { return BRACKET_PAIR;
+            } 
+            // fall through
+          case 48: break;
+          case 20: 
+            { return FIELD_URL;
+            } 
+            // fall through
+          case 49: break;
+          case 21: 
             { return TRIPLE_COMMENT;
             } 
             // fall through
-          case 22: break;
-          case 10: 
-            { yybegin(AFTER_FIELD_NAME); fieldValueState = STRING_FIELD_VALUE; return ENTITY_NAME;
+          case 50: break;
+          case 22: 
+            { return MODEL_BLOCK_ATTRIBUTE_NAME;
             } 
             // fall through
-          case 23: break;
-          case 11: 
-            { yybegin(BLOCK_DEF_KEYWORD);
-          currentBlock = currentBlockForKeyword(yytext().toString());
-          return blockKeywordToken(yytext().toString());
+          case 51: break;
+          case 23: 
+            { return BOOLEAN;
             } 
             // fall through
-          case 24: break;
-          case 12: 
-            { yybegin(DATASOURCE_FIELDS); return STRING;
+          case 52: break;
+          case 24: 
+            { return KEYWORD_ENUM;
             } 
             // fall through
-          case 25: break;
-          case 13: 
-            { yybegin(AFTER_FIELD_NAME); fieldValueState = DATASOURCE_PROVIDER_VALUE; return ENTITY_NAME;
+          case 53: break;
+          case 25: 
+            { return KEYWORD_MODEL;
             } 
             // fall through
-          case 26: break;
+          case 54: break;
+          case 26: 
+            { return FIELD_OUTPUT;
+            } 
+            // fall through
+          case 55: break;
+          case 27: 
+            { return FIELD_PROVIDER;
+            } 
+            // fall through
+          case 56: break;
+          case 28: 
+            { return KEYWORD_GENERATOR;
+            } 
+            // fall through
+          case 57: break;
+          case 29: 
+            { return KEYWORD_DATASOURCE;
+            } 
+            // fall through
+          case 58: break;
           default:
             zzScanError(ZZ_NO_MATCH);
           }
