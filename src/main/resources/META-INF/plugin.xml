@@ -19,6 +19,8 @@
                   fieldName="INSTANCE" language="Prisma" extensions="prisma"/>
         <lang.parserDefinition language="Prisma"
                                implementationClass="io.techtrails.intellij.prisma.PrismaParserDefinition"/>
+        <lang.syntaxHighlighterFactory language="Prisma"
+                                       implementationClass="io.techtrails.intellij.prisma.PrismaSyntaxHighlighterFactory"/>
     </extensions>
 
     <actions>

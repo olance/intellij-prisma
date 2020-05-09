@@ -26,15 +26,15 @@ public class PrismaModelBlockImpl extends PrismaBlockImpl implements PrismaModel
   }
 
   @Override
-  @Nullable
-  public PrismaBlockName getBlockName() {
-    return findChildByClass(PrismaBlockName.class);
-  }
-
-  @Override
   @NotNull
   public List<PrismaModelBlockStatement> getModelBlockStatementList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PrismaModelBlockStatement.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getBlockName() {
+    return findChildByType(BLOCK_NAME);
   }
 
 }

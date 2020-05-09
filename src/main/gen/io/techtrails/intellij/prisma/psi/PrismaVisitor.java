@@ -11,10 +11,6 @@ public class PrismaVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitBlockName(@NotNull PrismaBlockName o) {
-    visitPsiElement(o);
-  }
-
   public void visitDatasourceBlock(@NotNull PrismaDatasourceBlock o) {
     visitBlock(o);
   }

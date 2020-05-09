@@ -7,10 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface PrismaDatasourceBlock extends PrismaBlock {
 
-  @Nullable
-  PrismaBlockName getBlockName();
-
   @NotNull
   List<PrismaDatasourceBlockStatement> getDatasourceBlockStatementList();
+
+  @Nullable
+  PsiElement getBlockName();
 
 }

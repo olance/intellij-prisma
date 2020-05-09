@@ -26,15 +26,15 @@ public class PrismaEnumBlockImpl extends PrismaBlockImpl implements PrismaEnumBl
   }
 
   @Override
-  @Nullable
-  public PrismaBlockName getBlockName() {
-    return findChildByClass(PrismaBlockName.class);
-  }
-
-  @Override
   @NotNull
   public List<PrismaEnumBlockStatement> getEnumBlockStatementList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PrismaEnumBlockStatement.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getBlockName() {
+    return findChildByType(BLOCK_NAME);
   }
 
 }

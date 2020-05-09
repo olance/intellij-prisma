@@ -7,10 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface PrismaGeneratorBlock extends PrismaBlock {
 
-  @Nullable
-  PrismaBlockName getBlockName();
-
   @NotNull
   List<PrismaGeneratorBlockStatement> getGeneratorBlockStatementList();
+
+  @Nullable
+  PsiElement getBlockName();
 
 }

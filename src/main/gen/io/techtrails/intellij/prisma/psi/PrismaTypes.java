@@ -9,7 +9,6 @@ import io.techtrails.intellij.prisma.psi.impl.*;
 public interface PrismaTypes {
 
   IElementType BLOCK = new PrismaElementType("BLOCK");
-  IElementType BLOCK_NAME = new PrismaElementType("BLOCK_NAME");
   IElementType DATASOURCE_BLOCK = new PrismaElementType("DATASOURCE_BLOCK");
   IElementType DATASOURCE_BLOCK_STATEMENT = new PrismaElementType("DATASOURCE_BLOCK_STATEMENT");
   IElementType ENUM_BLOCK = new PrismaElementType("ENUM_BLOCK");
@@ -25,12 +24,13 @@ public interface PrismaTypes {
   IElementType MODEL_FIELD_TYPE = new PrismaElementType("MODEL_FIELD_TYPE");
   IElementType MODEL_TYPE_MODIFIER = new PrismaElementType("MODEL_TYPE_MODIFIER");
 
+  IElementType BLOCK_NAME = new PrismaTokenType("BLOCK_NAME");
   IElementType BOOLEAN = new PrismaTokenType("BOOLEAN");
-  IElementType BRACKET_PAIR = new PrismaTokenType("[]");
   IElementType COLON = new PrismaTokenType(":");
   IElementType COMMA = new PrismaTokenType(",");
   IElementType DOUBLE_COMMENT = new PrismaTokenType("DOUBLE_COMMENT");
   IElementType ENTITY_NAME = new PrismaTokenType("ENTITY_NAME");
+  IElementType EOL = new PrismaTokenType("EOL");
   IElementType EQ = new PrismaTokenType("=");
   IElementType FIELD_OUTPUT = new PrismaTokenType("output");
   IElementType FIELD_PROVIDER = new PrismaTokenType("provider");
@@ -45,6 +45,7 @@ public interface PrismaTypes {
   IElementType L_PAREN = new PrismaTokenType("(");
   IElementType MODEL_BLOCK_ATTRIBUTE_NAME = new PrismaTokenType("MODEL_BLOCK_ATTRIBUTE_NAME");
   IElementType MODEL_FIELD_ATTRIBUTE_NAME = new PrismaTokenType("MODEL_FIELD_ATTRIBUTE_NAME");
+  IElementType MODEL_TYPE_NAME = new PrismaTokenType("MODEL_TYPE_NAME");
   IElementType NUMBER = new PrismaTokenType("NUMBER");
   IElementType QUESTION_MARK = new PrismaTokenType("?");
   IElementType R_BRACKET = new PrismaTokenType("]");
@@ -56,10 +57,7 @@ public interface PrismaTypes {
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-      if (type == BLOCK_NAME) {
-        return new PrismaBlockNameImpl(node);
-      }
-      else if (type == DATASOURCE_BLOCK) {
+      if (type == DATASOURCE_BLOCK) {
         return new PrismaDatasourceBlockImpl(node);
       }
       else if (type == DATASOURCE_BLOCK_STATEMENT) {

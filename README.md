@@ -7,6 +7,7 @@ This IntelliJ plugin aims to provide basic support for [Prisma's](https://prisma
 
 - [X] Prisma icon on `.prisma` files
 - [ ] Syntax highlighting
+- [ ] Prisma-specific Color Scheme – being able to fine-tune syntax highlighting of Prisma-specific tokens
 - [ ] Line commenter – *being able to comment the current line via a keyboard shortcut*
 - [ ] Code folding – *being able to fold/collapse blocks within the editor*
 - [ ] Code structure view - *being able to see the file's structure in the Structure tool window*

@@ -26,15 +26,15 @@ public class PrismaDatasourceBlockImpl extends PrismaBlockImpl implements Prisma
   }
 
   @Override
-  @Nullable
-  public PrismaBlockName getBlockName() {
-    return findChildByClass(PrismaBlockName.class);
-  }
-
-  @Override
   @NotNull
   public List<PrismaDatasourceBlockStatement> getDatasourceBlockStatementList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PrismaDatasourceBlockStatement.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getBlockName() {
+    return findChildByType(BLOCK_NAME);
   }
 
 }

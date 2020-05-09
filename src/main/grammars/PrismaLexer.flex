@@ -23,7 +23,7 @@ import static io.techtrails.intellij.prisma.psi.PrismaTypes.*;
 %unicode
 
 EOL=\r|\n|\r\n
-WHITE_SPACE=\s+
+WHITE_SPACE=[\t ]+
 
 STRING=('([^'\\]|\\.)*'|\"([^\"\\]|\\\"|\\'|\\)*\")
 BOOLEAN=(true|false)
@@ -33,28 +33,31 @@ DOUBLE_COMMENT="//".*
 MODEL_BLOCK_ATTRIBUTE_NAME=@@[a-z]+
 MODEL_FIELD_ATTRIBUTE_NAME=@[a-z]+
 ENTITY_NAME=[A-Za-z][a-zA-Z_0-9]*
-FUNCTION_CALL=[a-z]+\(
+BLOCK_NAME=[A-Za-z][a-zA-Z_0-9]*
+FUNCTION_NAME=[a-z]+
 
+%state BLOCK_DEF
 %%
 
-<YYINITIAL> {
-  {WHITE_SPACE}                     { return WHITE_SPACE; }
+<BLOCK_DEF> {
+    {BLOCK_NAME}                    { return BLOCK_NAME; }
+    "{"                             { yybegin(YYINITIAL); return L_CURLY; } // Reset to initial state when entering block
+}
 
-  "{"                               { return L_CURLY; }
+<YYINITIAL> {
   "}"                               { return R_CURLY; }
   "["                               { return L_BRACKET; }
   "]"                               { return R_BRACKET; }
-  "[]"                              { return BRACKET_PAIR; }
   "("                               { return L_PAREN; }
   ")"                               { return R_PAREN; }
   ","                               { return COMMA; }
   "="                               { return EQ; }
   "?"                               { return QUESTION_MARK; }
   ":"                               { return COLON; }
-  "datasource"                      { return KEYWORD_DATASOURCE; }
-  "generator"                       { return KEYWORD_GENERATOR; }
-  "model"                           { return KEYWORD_MODEL; }
-  "enum"                            { return KEYWORD_ENUM; }
+  "datasource"                      { yybegin(BLOCK_DEF); return KEYWORD_DATASOURCE; }
+  "generator"                       { yybegin(BLOCK_DEF); return KEYWORD_GENERATOR; }
+  "model"                           { yybegin(BLOCK_DEF); return KEYWORD_MODEL; }
+  "enum"                            { yybegin(BLOCK_DEF); return KEYWORD_ENUM; }
   "provider"                        { return FIELD_PROVIDER; }
   "url"                             { return FIELD_URL; }
   "output"                          { return FIELD_OUTPUT; }
@@ -67,8 +70,9 @@ FUNCTION_CALL=[a-z]+\(
   {MODEL_BLOCK_ATTRIBUTE_NAME}      { return MODEL_BLOCK_ATTRIBUTE_NAME; }
   {MODEL_FIELD_ATTRIBUTE_NAME}      { return MODEL_FIELD_ATTRIBUTE_NAME; }
   {ENTITY_NAME}                     { return ENTITY_NAME; }
-  {FUNCTION_CALL}                   { return FUNCTION_CALL; }
-
+  {FUNCTION_NAME}/\s*\(             { return FUNCTION_CALL; }
 }
 
+{EOL}         { return EOL; }
+{WHITE_SPACE} { return WHITE_SPACE; }
 [^] { return BAD_CHARACTER; }

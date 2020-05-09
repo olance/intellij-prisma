@@ -7,10 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface PrismaEnumBlock extends PrismaBlock {
 
-  @Nullable
-  PrismaBlockName getBlockName();
-
   @NotNull
   List<PrismaEnumBlockStatement> getEnumBlockStatementList();
+
+  @Nullable
+  PsiElement getBlockName();
 
 }

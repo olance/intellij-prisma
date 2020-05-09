@@ -41,68 +41,53 @@ public class PrismaParser implements PsiParser, LightPsiParser {
   };
 
   /* ********************************************************** */
-  // '[]' | '[' (field-value (',' field-value)*)* ']'
+  // '[' (field-value (',' field-value)*)? ']'
   static boolean array(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "array")) return false;
-    if (!nextTokenIs(b, "", BRACKET_PAIR, L_BRACKET)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, BRACKET_PAIR);
-    if (!r) r = array_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // '[' (field-value (',' field-value)*)* ']'
-  private static boolean array_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "array_1")) return false;
+    if (!nextTokenIs(b, L_BRACKET)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_);
     r = consumeToken(b, L_BRACKET);
     p = r; // pin = 1
-    r = r && report_error_(b, array_1_1(b, l + 1));
+    r = r && report_error_(b, array_1(b, l + 1));
     r = p && consumeToken(b, R_BRACKET) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
-  // (field-value (',' field-value)*)*
-  private static boolean array_1_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "array_1_1")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!array_1_1_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "array_1_1", c)) break;
-    }
+  // (field-value (',' field-value)*)?
+  private static boolean array_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "array_1")) return false;
+    array_1_0(b, l + 1);
     return true;
   }
 
   // field-value (',' field-value)*
-  private static boolean array_1_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "array_1_1_0")) return false;
+  private static boolean array_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "array_1_0")) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_);
     r = field_value(b, l + 1);
     p = r; // pin = 1
-    r = r && array_1_1_0_1(b, l + 1);
+    r = r && array_1_0_1(b, l + 1);
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
   // (',' field-value)*
-  private static boolean array_1_1_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "array_1_1_0_1")) return false;
+  private static boolean array_1_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "array_1_0_1")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!array_1_1_0_1_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "array_1_1_0_1", c)) break;
+      if (!array_1_0_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "array_1_0_1", c)) break;
     }
     return true;
   }
 
   // ',' field-value
-  private static boolean array_1_1_0_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "array_1_1_0_1_0")) return false;
+  private static boolean array_1_0_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "array_1_0_1_0")) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_);
     r = consumeToken(b, COMMA);
@@ -127,18 +112,6 @@ public class PrismaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ENTITY_NAME
-  public static boolean block_name(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "block_name")) return false;
-    if (!nextTokenIs(b, ENTITY_NAME)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, ENTITY_NAME);
-    exit_section_(b, m, BLOCK_NAME, r);
-    return r;
-  }
-
-  /* ********************************************************** */
   // TRIPLE_COMMENT | DOUBLE_COMMENT
   static boolean comment(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "comment")) return false;
@@ -150,40 +123,68 @@ public class PrismaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'datasource'    block-name '{' (datasource-block-statement  | comment)* '}'
+  // 'datasource'    BLOCK_NAME '{' EOL? ((datasource-block-statement comment? EOL)  | comment | EOL)* '}'
   public static boolean datasource_block(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "datasource_block")) return false;
     if (!nextTokenIs(b, KEYWORD_DATASOURCE)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, DATASOURCE_BLOCK, null);
-    r = consumeToken(b, KEYWORD_DATASOURCE);
+    r = consumeTokens(b, 1, KEYWORD_DATASOURCE, BLOCK_NAME, L_CURLY);
     p = r; // pin = 1
-    r = r && report_error_(b, block_name(b, l + 1));
-    r = p && report_error_(b, consumeToken(b, L_CURLY)) && r;
-    r = p && report_error_(b, datasource_block_3(b, l + 1)) && r;
+    r = r && report_error_(b, datasource_block_3(b, l + 1));
+    r = p && report_error_(b, datasource_block_4(b, l + 1)) && r;
     r = p && consumeToken(b, R_CURLY) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
-  // (datasource-block-statement  | comment)*
+  // EOL?
   private static boolean datasource_block_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "datasource_block_3")) return false;
+    consumeToken(b, EOL);
+    return true;
+  }
+
+  // ((datasource-block-statement comment? EOL)  | comment | EOL)*
+  private static boolean datasource_block_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "datasource_block_4")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!datasource_block_3_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "datasource_block_3", c)) break;
+      if (!datasource_block_4_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "datasource_block_4", c)) break;
     }
     return true;
   }
 
-  // datasource-block-statement  | comment
-  private static boolean datasource_block_3_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "datasource_block_3_0")) return false;
+  // (datasource-block-statement comment? EOL)  | comment | EOL
+  private static boolean datasource_block_4_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "datasource_block_4_0")) return false;
     boolean r;
-    r = datasource_block_statement(b, l + 1);
+    Marker m = enter_section_(b);
+    r = datasource_block_4_0_0(b, l + 1);
     if (!r) r = comment(b, l + 1);
+    if (!r) r = consumeToken(b, EOL);
+    exit_section_(b, m, null, r);
     return r;
+  }
+
+  // datasource-block-statement comment? EOL
+  private static boolean datasource_block_4_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "datasource_block_4_0_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = datasource_block_statement(b, l + 1);
+    r = r && datasource_block_4_0_0_1(b, l + 1);
+    r = r && consumeToken(b, EOL);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // comment?
+  private static boolean datasource_block_4_0_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "datasource_block_4_0_0_1")) return false;
+    comment(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */
@@ -212,40 +213,68 @@ public class PrismaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'enum'          block-name '{' (enum-block-statement        | comment)* '}'
+  // 'enum'          BLOCK_NAME '{' EOL? ((enum-block-statement comment? EOL)        | comment | EOL)* '}'
   public static boolean enum_block(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_block")) return false;
     if (!nextTokenIs(b, KEYWORD_ENUM)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, ENUM_BLOCK, null);
-    r = consumeToken(b, KEYWORD_ENUM);
+    r = consumeTokens(b, 1, KEYWORD_ENUM, BLOCK_NAME, L_CURLY);
     p = r; // pin = 1
-    r = r && report_error_(b, block_name(b, l + 1));
-    r = p && report_error_(b, consumeToken(b, L_CURLY)) && r;
-    r = p && report_error_(b, enum_block_3(b, l + 1)) && r;
+    r = r && report_error_(b, enum_block_3(b, l + 1));
+    r = p && report_error_(b, enum_block_4(b, l + 1)) && r;
     r = p && consumeToken(b, R_CURLY) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
-  // (enum-block-statement        | comment)*
+  // EOL?
   private static boolean enum_block_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_block_3")) return false;
+    consumeToken(b, EOL);
+    return true;
+  }
+
+  // ((enum-block-statement comment? EOL)        | comment | EOL)*
+  private static boolean enum_block_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enum_block_4")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!enum_block_3_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "enum_block_3", c)) break;
+      if (!enum_block_4_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "enum_block_4", c)) break;
     }
     return true;
   }
 
-  // enum-block-statement        | comment
-  private static boolean enum_block_3_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "enum_block_3_0")) return false;
+  // (enum-block-statement comment? EOL)        | comment | EOL
+  private static boolean enum_block_4_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enum_block_4_0")) return false;
     boolean r;
-    r = enum_block_statement(b, l + 1);
+    Marker m = enter_section_(b);
+    r = enum_block_4_0_0(b, l + 1);
     if (!r) r = comment(b, l + 1);
+    if (!r) r = consumeToken(b, EOL);
+    exit_section_(b, m, null, r);
     return r;
+  }
+
+  // enum-block-statement comment? EOL
+  private static boolean enum_block_4_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enum_block_4_0_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = enum_block_statement(b, l + 1);
+    r = r && enum_block_4_0_0_1(b, l + 1);
+    r = r && consumeToken(b, EOL);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // comment?
+  private static boolean enum_block_4_0_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enum_block_4_0_0_1")) return false;
+    comment(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */
@@ -281,13 +310,13 @@ public class PrismaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'env(' STRING ')'
+  // 'env' '(' STRING ')'
   static boolean env_var_value(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "env_var_value")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, "env(");
-    r = r && consumeTokens(b, 0, STRING, R_PAREN);
+    r = consumeToken(b, "env");
+    r = r && consumeTokens(b, 0, L_PAREN, STRING, R_PAREN);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -304,40 +333,68 @@ public class PrismaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'generator'     block-name '{' (generator-block-statement   | comment)* '}'
+  // 'generator'     BLOCK_NAME '{' EOL? ((generator-block-statement comment? EOL)   | comment | EOL)* '}'
   public static boolean generator_block(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "generator_block")) return false;
     if (!nextTokenIs(b, KEYWORD_GENERATOR)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, GENERATOR_BLOCK, null);
-    r = consumeToken(b, KEYWORD_GENERATOR);
+    r = consumeTokens(b, 1, KEYWORD_GENERATOR, BLOCK_NAME, L_CURLY);
     p = r; // pin = 1
-    r = r && report_error_(b, block_name(b, l + 1));
-    r = p && report_error_(b, consumeToken(b, L_CURLY)) && r;
-    r = p && report_error_(b, generator_block_3(b, l + 1)) && r;
+    r = r && report_error_(b, generator_block_3(b, l + 1));
+    r = p && report_error_(b, generator_block_4(b, l + 1)) && r;
     r = p && consumeToken(b, R_CURLY) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
-  // (generator-block-statement   | comment)*
+  // EOL?
   private static boolean generator_block_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "generator_block_3")) return false;
+    consumeToken(b, EOL);
+    return true;
+  }
+
+  // ((generator-block-statement comment? EOL)   | comment | EOL)*
+  private static boolean generator_block_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "generator_block_4")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!generator_block_3_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "generator_block_3", c)) break;
+      if (!generator_block_4_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "generator_block_4", c)) break;
     }
     return true;
   }
 
-  // generator-block-statement   | comment
-  private static boolean generator_block_3_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "generator_block_3_0")) return false;
+  // (generator-block-statement comment? EOL)   | comment | EOL
+  private static boolean generator_block_4_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "generator_block_4_0")) return false;
     boolean r;
-    r = generator_block_statement(b, l + 1);
+    Marker m = enter_section_(b);
+    r = generator_block_4_0_0(b, l + 1);
     if (!r) r = comment(b, l + 1);
+    if (!r) r = consumeToken(b, EOL);
+    exit_section_(b, m, null, r);
     return r;
+  }
+
+  // generator-block-statement comment? EOL
+  private static boolean generator_block_4_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "generator_block_4_0_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = generator_block_statement(b, l + 1);
+    r = r && generator_block_4_0_0_1(b, l + 1);
+    r = r && consumeToken(b, EOL);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // comment?
+  private static boolean generator_block_4_0_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "generator_block_4_0_0_1")) return false;
+    comment(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */
@@ -417,52 +474,51 @@ public class PrismaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // '[]' | '[' model-attribute-param-value-scalar? (',' model-attribute-param-value-scalar)* ']'
+  // '[' (model-attribute-param-value-scalar (',' model-attribute-param-value-scalar)*)? ']'
   static boolean model_attribute_param_value_array(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "model_attribute_param_value_array")) return false;
-    if (!nextTokenIs(b, "", BRACKET_PAIR, L_BRACKET)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, BRACKET_PAIR);
-    if (!r) r = model_attribute_param_value_array_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // '[' model-attribute-param-value-scalar? (',' model-attribute-param-value-scalar)* ']'
-  private static boolean model_attribute_param_value_array_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "model_attribute_param_value_array_1")) return false;
+    if (!nextTokenIs(b, L_BRACKET)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, L_BRACKET);
-    r = r && model_attribute_param_value_array_1_1(b, l + 1);
-    r = r && model_attribute_param_value_array_1_2(b, l + 1);
+    r = r && model_attribute_param_value_array_1(b, l + 1);
     r = r && consumeToken(b, R_BRACKET);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // model-attribute-param-value-scalar?
-  private static boolean model_attribute_param_value_array_1_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "model_attribute_param_value_array_1_1")) return false;
-    model_attribute_param_value_scalar(b, l + 1);
+  // (model-attribute-param-value-scalar (',' model-attribute-param-value-scalar)*)?
+  private static boolean model_attribute_param_value_array_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_attribute_param_value_array_1")) return false;
+    model_attribute_param_value_array_1_0(b, l + 1);
     return true;
   }
 
+  // model-attribute-param-value-scalar (',' model-attribute-param-value-scalar)*
+  private static boolean model_attribute_param_value_array_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_attribute_param_value_array_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = model_attribute_param_value_scalar(b, l + 1);
+    r = r && model_attribute_param_value_array_1_0_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
   // (',' model-attribute-param-value-scalar)*
-  private static boolean model_attribute_param_value_array_1_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "model_attribute_param_value_array_1_2")) return false;
+  private static boolean model_attribute_param_value_array_1_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_attribute_param_value_array_1_0_1")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!model_attribute_param_value_array_1_2_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "model_attribute_param_value_array_1_2", c)) break;
+      if (!model_attribute_param_value_array_1_0_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "model_attribute_param_value_array_1_0_1", c)) break;
     }
     return true;
   }
 
   // ',' model-attribute-param-value-scalar
-  private static boolean model_attribute_param_value_array_1_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "model_attribute_param_value_array_1_2_0")) return false;
+  private static boolean model_attribute_param_value_array_1_0_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_attribute_param_value_array_1_0_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, COMMA);
@@ -532,40 +588,68 @@ public class PrismaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'model'         block-name '{' (model-block-statement       | comment)* '}'
+  // 'model'         BLOCK_NAME '{' EOL? ((model-block-statement comment? EOL)       | comment | EOL)* '}'
   public static boolean model_block(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "model_block")) return false;
     if (!nextTokenIs(b, KEYWORD_MODEL)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, MODEL_BLOCK, null);
-    r = consumeToken(b, KEYWORD_MODEL);
+    r = consumeTokens(b, 1, KEYWORD_MODEL, BLOCK_NAME, L_CURLY);
     p = r; // pin = 1
-    r = r && report_error_(b, block_name(b, l + 1));
-    r = p && report_error_(b, consumeToken(b, L_CURLY)) && r;
-    r = p && report_error_(b, model_block_3(b, l + 1)) && r;
+    r = r && report_error_(b, model_block_3(b, l + 1));
+    r = p && report_error_(b, model_block_4(b, l + 1)) && r;
     r = p && consumeToken(b, R_CURLY) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
-  // (model-block-statement       | comment)*
+  // EOL?
   private static boolean model_block_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "model_block_3")) return false;
+    consumeToken(b, EOL);
+    return true;
+  }
+
+  // ((model-block-statement comment? EOL)       | comment | EOL)*
+  private static boolean model_block_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_block_4")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!model_block_3_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "model_block_3", c)) break;
+      if (!model_block_4_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "model_block_4", c)) break;
     }
     return true;
   }
 
-  // model-block-statement       | comment
-  private static boolean model_block_3_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "model_block_3_0")) return false;
+  // (model-block-statement comment? EOL)       | comment | EOL
+  private static boolean model_block_4_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_block_4_0")) return false;
     boolean r;
-    r = model_block_statement(b, l + 1);
+    Marker m = enter_section_(b);
+    r = model_block_4_0_0(b, l + 1);
     if (!r) r = comment(b, l + 1);
+    if (!r) r = consumeToken(b, EOL);
+    exit_section_(b, m, null, r);
     return r;
+  }
+
+  // model-block-statement comment? EOL
+  private static boolean model_block_4_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_block_4_0_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = model_block_statement(b, l + 1);
+    r = r && model_block_4_0_0_1(b, l + 1);
+    r = r && consumeToken(b, EOL);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // comment?
+  private static boolean model_block_4_0_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_block_4_0_0_1")) return false;
+    comment(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */
@@ -622,7 +706,7 @@ public class PrismaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ENTITY_NAME model-field-type model-field-attribute*
+  // ENTITY_NAME model-field-type (model-field-attribute (EOL? model-field-attribute)*)?
   static boolean model_field_definition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "model_field_definition")) return false;
     if (!nextTokenIs(b, ENTITY_NAME)) return false;
@@ -636,14 +720,50 @@ public class PrismaParser implements PsiParser, LightPsiParser {
     return r || p;
   }
 
-  // model-field-attribute*
+  // (model-field-attribute (EOL? model-field-attribute)*)?
   private static boolean model_field_definition_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "model_field_definition_2")) return false;
+    model_field_definition_2_0(b, l + 1);
+    return true;
+  }
+
+  // model-field-attribute (EOL? model-field-attribute)*
+  private static boolean model_field_definition_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_field_definition_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = model_field_attribute(b, l + 1);
+    r = r && model_field_definition_2_0_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (EOL? model-field-attribute)*
+  private static boolean model_field_definition_2_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_field_definition_2_0_1")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!model_field_attribute(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "model_field_definition_2", c)) break;
+      if (!model_field_definition_2_0_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "model_field_definition_2_0_1", c)) break;
     }
+    return true;
+  }
+
+  // EOL? model-field-attribute
+  private static boolean model_field_definition_2_0_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_field_definition_2_0_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = model_field_definition_2_0_1_0_0(b, l + 1);
+    r = r && model_field_attribute(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // EOL?
+  private static boolean model_field_definition_2_0_1_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_field_definition_2_0_1_0_0")) return false;
+    consumeToken(b, EOL);
     return true;
   }
 
@@ -668,27 +788,53 @@ public class PrismaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // FUNCTION_CALL ')'
+  // FUNCTION_CALL '(' ')'
   static boolean model_function(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "model_function")) return false;
     if (!nextTokenIs(b, FUNCTION_CALL)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, FUNCTION_CALL, R_PAREN);
+    r = consumeTokens(b, 0, FUNCTION_CALL, L_PAREN, R_PAREN);
     exit_section_(b, m, null, r);
     return r;
   }
 
   /* ********************************************************** */
-  // '?' | '[]'
+  // '?' | '[' + ']'
   public static boolean model_type_modifier(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "model_type_modifier")) return false;
-    if (!nextTokenIs(b, "<model type modifier>", BRACKET_PAIR, QUESTION_MARK)) return false;
+    if (!nextTokenIs(b, "<model type modifier>", L_BRACKET, QUESTION_MARK)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, MODEL_TYPE_MODIFIER, "<model type modifier>");
     r = consumeToken(b, QUESTION_MARK);
-    if (!r) r = consumeToken(b, BRACKET_PAIR);
+    if (!r) r = model_type_modifier_1(b, l + 1);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // '[' + ']'
+  private static boolean model_type_modifier_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_type_modifier_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = model_type_modifier_1_0(b, l + 1);
+    r = r && consumeToken(b, R_BRACKET);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // '[' +
+  private static boolean model_type_modifier_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "model_type_modifier_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, L_BRACKET);
+    while (r) {
+      int c = current_position_(b);
+      if (!consumeToken(b, L_BRACKET)) break;
+      if (!empty_element_parsed_guard_(b, "model_type_modifier_1_0", c)) break;
+    }
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -705,13 +851,14 @@ public class PrismaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // !<<eof>> block | comment
+  // !<<eof>> block | comment | EOL
   static boolean root_item(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "root_item")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = root_item_0(b, l + 1);
     if (!r) r = comment(b, l + 1);
+    if (!r) r = consumeToken(b, EOL);
     exit_section_(b, m, null, r);
     return r;
   }

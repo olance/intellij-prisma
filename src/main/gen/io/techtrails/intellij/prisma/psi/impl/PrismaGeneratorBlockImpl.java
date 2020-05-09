@@ -26,15 +26,15 @@ public class PrismaGeneratorBlockImpl extends PrismaBlockImpl implements PrismaG
   }
 
   @Override
-  @Nullable
-  public PrismaBlockName getBlockName() {
-    return findChildByClass(PrismaBlockName.class);
-  }
-
-  @Override
   @NotNull
   public List<PrismaGeneratorBlockStatement> getGeneratorBlockStatementList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PrismaGeneratorBlockStatement.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getBlockName() {
+    return findChildByType(BLOCK_NAME);
   }
 
 }
