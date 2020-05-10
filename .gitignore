@@ -4,3 +4,6 @@ build/
 out/
 /idea-flex.skeleton
 /jflex-1.7.0-2.jar
+.java~
+.skeleton
+jflex-1.7.0-2.jar
