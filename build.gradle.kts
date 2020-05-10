@@ -38,6 +38,15 @@ tasks {
 
 tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml") {
     changeNotes("""
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>""")
+      <b>Upcoming</b>
+      <ul>
+        <li>Prisma-specific Color Scheme for a more controlled syntax highlighting</li>
+      </ul>
+        
+      <b>v0.0.1</b>
+      <ul>
+        <li>Recognition of `.prisma` files</li>
+        <li>Very basic syntax highlighting (using default Color Scheme)</li>
+      </ul>
+      """)
 }
