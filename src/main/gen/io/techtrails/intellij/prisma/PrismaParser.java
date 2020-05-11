@@ -213,13 +213,13 @@ public class PrismaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'enum'          BLOCK_NAME '{' EOL? ((enum-block-statement comment? EOL)        | comment | EOL)* '}'
+  // 'enum'          ENUM_NAME  '{' EOL? ((enum-block-statement comment? EOL)        | comment | EOL)* '}'
   public static boolean enum_block(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_block")) return false;
     if (!nextTokenIs(b, KEYWORD_ENUM)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, ENUM_BLOCK, null);
-    r = consumeTokens(b, 1, KEYWORD_ENUM, BLOCK_NAME, L_CURLY);
+    r = consumeTokens(b, 1, KEYWORD_ENUM, ENUM_NAME, L_CURLY);
     p = r; // pin = 1
     r = r && report_error_(b, enum_block_3(b, l + 1));
     r = p && report_error_(b, enum_block_4(b, l + 1)) && r;
@@ -588,13 +588,13 @@ public class PrismaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'model'         BLOCK_NAME '{' EOL? ((model-block-statement comment? EOL)       | comment | EOL)* '}'
+  // 'model'         MODEL_NAME '{' EOL? ((model-block-statement comment? EOL)       | comment | EOL)* '}'
   public static boolean model_block(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "model_block")) return false;
     if (!nextTokenIs(b, KEYWORD_MODEL)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, MODEL_BLOCK, null);
-    r = consumeTokens(b, 1, KEYWORD_MODEL, BLOCK_NAME, L_CURLY);
+    r = consumeTokens(b, 1, KEYWORD_MODEL, MODEL_NAME, L_CURLY);
     p = r; // pin = 1
     r = r && report_error_(b, model_block_3(b, l + 1));
     r = p && report_error_(b, model_block_4(b, l + 1)) && r;

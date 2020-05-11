@@ -11,6 +11,6 @@ public interface PrismaModelBlock extends PrismaBlock {
   List<PrismaModelBlockStatement> getModelBlockStatementList();
 
   @Nullable
-  PsiElement getBlockName();
+  PsiElement getModelName();
 
 }

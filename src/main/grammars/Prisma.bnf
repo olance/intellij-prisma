@@ -51,7 +51,10 @@
         MODEL_FIELD_ATTRIBUTE_NAME = 'regexp:@[a-z]+'
 
         ENTITY_NAME = 'regexp:[A-Za-z]\w*'
-        BLOCK_NAME = 'regexp:[A-Za-z]\w*'
+        BLOCK_NAME
+        MODEL_NAME
+        ENUM_NAME
+
         MODEL_TYPE_NAME = 'regexp:[A-Za-z]\w*(\[]|\?)?'
         FUNCTION_CALL = 'regexp:[a-z]+\s*(?:\()'
     ]
@@ -72,8 +75,8 @@ private env-var-value ::= 'env' '(' STRING ')'
 block               ::= datasource-block | generator-block | model-block | enum-block
 datasource-block    ::= 'datasource'    BLOCK_NAME '{' EOL? ((datasource-block-statement comment? EOL)  | comment | EOL)* '}' { pin=1 }
 generator-block     ::= 'generator'     BLOCK_NAME '{' EOL? ((generator-block-statement comment? EOL)   | comment | EOL)* '}' { pin=1 }
-model-block         ::= 'model'         BLOCK_NAME '{' EOL? ((model-block-statement comment? EOL)       | comment | EOL)* '}' { pin=1 }
-enum-block          ::= 'enum'          BLOCK_NAME '{' EOL? ((enum-block-statement comment? EOL)        | comment | EOL)* '}' { pin=1 }
+model-block         ::= 'model'         MODEL_NAME '{' EOL? ((model-block-statement comment? EOL)       | comment | EOL)* '}' { pin=1 }
+enum-block          ::= 'enum'          ENUM_NAME  '{' EOL? ((enum-block-statement comment? EOL)        | comment | EOL)* '}' { pin=1 }
 
 datasource-block-statement ::= ('provider' '=' STRING | 'url' '=' string-or-env) { pin(".*")=1 }
 

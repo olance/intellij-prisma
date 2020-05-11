@@ -11,6 +11,6 @@ public interface PrismaEnumBlock extends PrismaBlock {
   List<PrismaEnumBlockStatement> getEnumBlockStatementList();
 
   @Nullable
-  PsiElement getBlockName();
+  PsiElement getEnumName();
 
 }

@@ -33,8 +33,8 @@ public class PrismaModelBlockImpl extends PrismaBlockImpl implements PrismaModel
 
   @Override
   @Nullable
-  public PsiElement getBlockName() {
-    return findChildByType(BLOCK_NAME);
+  public PsiElement getModelName() {
+    return findChildByType(MODEL_NAME);
   }
 
 }

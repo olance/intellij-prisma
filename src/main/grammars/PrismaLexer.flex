@@ -36,12 +36,22 @@ ENTITY_NAME=[A-Za-z][a-zA-Z_0-9]*
 BLOCK_NAME=[A-Za-z][a-zA-Z_0-9]*
 FUNCTION_NAME=[a-z]+
 
-%state BLOCK_DEF
+%state BLOCK_DEF, MODEL_BLOCK_DEF, ENUM_BLOCK_DEF
 %%
 
+<MODEL_BLOCK_DEF> {
+    {BLOCK_NAME}                            { return MODEL_NAME; }
+}
+
+<ENUM_BLOCK_DEF> {
+    {BLOCK_NAME}                            { return ENUM_NAME; }
+}
+
 <BLOCK_DEF> {
-    {BLOCK_NAME}                    { return BLOCK_NAME; }
-    "{"                             { yybegin(YYINITIAL); return L_CURLY; } // Reset to initial state when entering block
+    {BLOCK_NAME}                            { return BLOCK_NAME; }
+
+    // Reset to initial state when entering block
+    <MODEL_BLOCK_DEF, ENUM_BLOCK_DEF> "{"   { yybegin(YYINITIAL); return L_CURLY; }
 }
 
 <YYINITIAL> {
@@ -54,10 +64,12 @@ FUNCTION_NAME=[a-z]+
   "="                               { return EQ; }
   "?"                               { return QUESTION_MARK; }
   ":"                               { return COLON; }
+
   "datasource"                      { yybegin(BLOCK_DEF); return KEYWORD_DATASOURCE; }
   "generator"                       { yybegin(BLOCK_DEF); return KEYWORD_GENERATOR; }
-  "model"                           { yybegin(BLOCK_DEF); return KEYWORD_MODEL; }
-  "enum"                            { yybegin(BLOCK_DEF); return KEYWORD_ENUM; }
+  "model"                           { yybegin(MODEL_BLOCK_DEF); return KEYWORD_MODEL; }
+  "enum"                            { yybegin(ENUM_BLOCK_DEF); return KEYWORD_ENUM; }
+
   "provider"                        { return FIELD_PROVIDER; }
   "url"                             { return FIELD_URL; }
   "output"                          { return FIELD_OUTPUT; }

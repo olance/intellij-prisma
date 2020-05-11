@@ -30,6 +30,7 @@ public interface PrismaTypes {
   IElementType COMMA = new PrismaTokenType(",");
   IElementType DOUBLE_COMMENT = new PrismaTokenType("DOUBLE_COMMENT");
   IElementType ENTITY_NAME = new PrismaTokenType("ENTITY_NAME");
+  IElementType ENUM_NAME = new PrismaTokenType("ENUM_NAME");
   IElementType EOL = new PrismaTokenType("EOL");
   IElementType EQ = new PrismaTokenType("=");
   IElementType FIELD_OUTPUT = new PrismaTokenType("output");
@@ -45,6 +46,7 @@ public interface PrismaTypes {
   IElementType L_PAREN = new PrismaTokenType("(");
   IElementType MODEL_BLOCK_ATTRIBUTE_NAME = new PrismaTokenType("MODEL_BLOCK_ATTRIBUTE_NAME");
   IElementType MODEL_FIELD_ATTRIBUTE_NAME = new PrismaTokenType("MODEL_FIELD_ATTRIBUTE_NAME");
+  IElementType MODEL_NAME = new PrismaTokenType("MODEL_NAME");
   IElementType MODEL_TYPE_NAME = new PrismaTokenType("MODEL_TYPE_NAME");
   IElementType NUMBER = new PrismaTokenType("NUMBER");
   IElementType QUESTION_MARK = new PrismaTokenType("?");
