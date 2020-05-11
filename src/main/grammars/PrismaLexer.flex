@@ -25,9 +25,9 @@ import static io.techtrails.intellij.prisma.psi.PrismaTypes.*;
 EOL=\r|\n|\r\n
 WHITE_SPACE=[\t ]+
 
-STRING=('([^'\\]|\\.)*'|\"([^\"\\]|\\\"|\\'|\\)*\")
+STRING=\"[\w/._%@:?=-]*\"
 BOOLEAN=(true|false)
-NUMBER=[0-9]*\.?[0-9]+
+NUMBER=((0(x|X)[0-9a-fA-F]*)|(\\+|-)?\\b(([0-9]+\\.?[0-9]*)|(\\.[0-9]+))((e|E)(\\+|-)?[0-9]+)?)([LlFfUuDdg]|UL|ul)?\\b
 TRIPLE_COMMENT="///".*
 DOUBLE_COMMENT="//".*
 MODEL_BLOCK_ATTRIBUTE_NAME=@@[a-z]+

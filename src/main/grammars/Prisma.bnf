@@ -20,9 +20,9 @@
         EOL = "regexp:\r|\n|\r\n"
         WHITE_SPACE = "regexp:[\t ]+"
 
-        STRING = "regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\\"|\\\'|\\)*\")"
+        STRING = "regexp:\"[\w/._%@:?=-]*\""
         BOOLEAN = 'regexp:(true|false)'
-        NUMBER = 'regexp:\d*\.?\d+'
+        NUMBER = 'regexp:((0[xX][0-9a-fA-F]*)|(\\+|-)?\\b(([0-9]+\\.?[0-9]*)|(\\.[0-9]+))([eE](\\+|-)?[0-9]+)?)([LlFfUuDdg]|UL|ul)?\\b'
 
         L_CURLY = '{'
         R_CURLY = '}'
