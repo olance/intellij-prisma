@@ -11,31 +11,19 @@ import static io.techtrails.intellij.prisma.psi.PrismaTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import io.techtrails.intellij.prisma.psi.*;
 
-public class PrismaModelFieldTypeImpl extends ASTWrapperPsiElement implements PrismaModelFieldType {
+public class PrismaTypeModifierImpl extends ASTWrapperPsiElement implements PrismaTypeModifier {
 
-  public PrismaModelFieldTypeImpl(@NotNull ASTNode node) {
+  public PrismaTypeModifierImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PrismaVisitor visitor) {
-    visitor.visitModelFieldType(this);
+    visitor.visitTypeModifier(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof PrismaVisitor) accept((PrismaVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public PrismaModelTypeModifier getModelTypeModifier() {
-    return findChildByClass(PrismaModelTypeModifier.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getEntityName() {
-    return findNotNullChildByType(ENTITY_NAME);
   }
 
 }

@@ -28,14 +28,14 @@ public class PrismaEnumBlockStatementImpl extends ASTWrapperPsiElement implement
 
   @Override
   @NotNull
-  public PsiElement getEntityName() {
-    return findNotNullChildByType(ENTITY_NAME);
+  public PrismaEnumConstant getEnumConstant() {
+    return findNotNullChildByClass(PrismaEnumConstant.class);
   }
 
   @Override
   @Nullable
-  public PsiElement getString() {
-    return findChildByType(STRING);
+  public PrismaEnumConstantValue getEnumConstantValue() {
+    return findChildByClass(PrismaEnumConstantValue.class);
   }
 
 }

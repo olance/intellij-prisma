@@ -7,15 +7,23 @@ import com.intellij.psi.PsiElement;
 
 public class PrismaVisitor extends PsiElementVisitor {
 
+  public void visitAttributeArgName(@NotNull PrismaAttributeArgName o) {
+    visitPsiElement(o);
+  }
+
   public void visitBlock(@NotNull PrismaBlock o) {
     visitPsiElement(o);
   }
 
-  public void visitDatasourceBlock(@NotNull PrismaDatasourceBlock o) {
+  public void visitBlockName(@NotNull PrismaBlockName o) {
+    visitPsiElement(o);
+  }
+
+  public void visitConfigBlock(@NotNull PrismaConfigBlock o) {
     visitBlock(o);
   }
 
-  public void visitDatasourceBlockStatement(@NotNull PrismaDatasourceBlockStatement o) {
+  public void visitConfigBlockStatement(@NotNull PrismaConfigBlockStatement o) {
     visitPsiElement(o);
   }
 
@@ -27,19 +35,27 @@ public class PrismaVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitGeneratorBlock(@NotNull PrismaGeneratorBlock o) {
-    visitBlock(o);
-  }
-
-  public void visitGeneratorBlockStatement(@NotNull PrismaGeneratorBlockStatement o) {
+  public void visitEnumConstant(@NotNull PrismaEnumConstant o) {
     visitPsiElement(o);
   }
 
-  public void visitModelAttributeParamName(@NotNull PrismaModelAttributeParamName o) {
+  public void visitEnumConstantValue(@NotNull PrismaEnumConstantValue o) {
     visitPsiElement(o);
   }
 
-  public void visitModelAttributeParamValue(@NotNull PrismaModelAttributeParamValue o) {
+  public void visitFieldName(@NotNull PrismaFieldName o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFieldType(@NotNull PrismaFieldType o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFieldValue(@NotNull PrismaFieldValue o) {
+    visitPsiElement(o);
+  }
+
+  public void visitIdentifier(@NotNull PrismaIdentifier o) {
     visitPsiElement(o);
   }
 
@@ -47,23 +63,19 @@ public class PrismaVisitor extends PsiElementVisitor {
     visitBlock(o);
   }
 
-  public void visitModelBlockAttribute(@NotNull PrismaModelBlockAttribute o) {
-    visitPsiElement(o);
-  }
-
   public void visitModelBlockStatement(@NotNull PrismaModelBlockStatement o) {
     visitPsiElement(o);
   }
 
-  public void visitModelFieldAttribute(@NotNull PrismaModelFieldAttribute o) {
+  public void visitTypeAlias(@NotNull PrismaTypeAlias o) {
     visitPsiElement(o);
   }
 
-  public void visitModelFieldType(@NotNull PrismaModelFieldType o) {
+  public void visitTypeModifier(@NotNull PrismaTypeModifier o) {
     visitPsiElement(o);
   }
 
-  public void visitModelTypeModifier(@NotNull PrismaModelTypeModifier o) {
+  public void visitTypeName(@NotNull PrismaTypeName o) {
     visitPsiElement(o);
   }
 

@@ -11,14 +11,14 @@ import static io.techtrails.intellij.prisma.psi.PrismaTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import io.techtrails.intellij.prisma.psi.*;
 
-public class PrismaModelFieldAttributeImpl extends ASTWrapperPsiElement implements PrismaModelFieldAttribute {
+public class PrismaFieldValueImpl extends ASTWrapperPsiElement implements PrismaFieldValue {
 
-  public PrismaModelFieldAttributeImpl(@NotNull ASTNode node) {
+  public PrismaFieldValueImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PrismaVisitor visitor) {
-    visitor.visitModelFieldAttribute(this);
+    visitor.visitFieldValue(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -28,20 +28,26 @@ public class PrismaModelFieldAttributeImpl extends ASTWrapperPsiElement implemen
 
   @Override
   @NotNull
-  public List<PrismaModelAttributeParamName> getModelAttributeParamNameList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PrismaModelAttributeParamName.class);
+  public List<PrismaFieldValue> getFieldValueList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PrismaFieldValue.class);
   }
 
   @Override
-  @NotNull
-  public List<PrismaModelAttributeParamValue> getModelAttributeParamValueList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PrismaModelAttributeParamValue.class);
+  @Nullable
+  public PsiElement getBoolean() {
+    return findChildByType(BOOLEAN);
   }
 
   @Override
-  @NotNull
-  public PsiElement getModelFieldAttributeName() {
-    return findNotNullChildByType(MODEL_FIELD_ATTRIBUTE_NAME);
+  @Nullable
+  public PsiElement getNumber() {
+    return findChildByType(NUMBER);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getString() {
+    return findChildByType(STRING);
   }
 
 }

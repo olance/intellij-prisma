@@ -8,16 +8,17 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static io.techtrails.intellij.prisma.psi.PrismaTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import io.techtrails.intellij.prisma.psi.*;
 
-public class PrismaDatasourceBlockImpl extends PrismaBlockImpl implements PrismaDatasourceBlock {
+public class PrismaAttributeArgNameImpl extends ASTWrapperPsiElement implements PrismaAttributeArgName {
 
-  public PrismaDatasourceBlockImpl(@NotNull ASTNode node) {
+  public PrismaAttributeArgNameImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PrismaVisitor visitor) {
-    visitor.visitDatasourceBlock(this);
+    visitor.visitAttributeArgName(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -27,14 +28,8 @@ public class PrismaDatasourceBlockImpl extends PrismaBlockImpl implements Prisma
 
   @Override
   @NotNull
-  public List<PrismaDatasourceBlockStatement> getDatasourceBlockStatementList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PrismaDatasourceBlockStatement.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getBlockName() {
-    return findChildByType(BLOCK_NAME);
+  public PsiElement getEntityName() {
+    return findNotNullChildByType(ENTITY_NAME);
   }
 
 }

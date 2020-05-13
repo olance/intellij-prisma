@@ -5,15 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface PrismaGeneratorBlockStatement extends PsiElement {
+public interface PrismaAttributeArgName extends PsiElement {
 
-  @Nullable
-  PsiElement getBoolean();
-
-  @Nullable
+  @NotNull
   PsiElement getEntityName();
-
-  @Nullable
-  PsiElement getNumber();
 
 }

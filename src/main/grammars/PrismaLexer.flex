@@ -33,46 +33,16 @@ DOUBLE_COMMENT="//".*
 MODEL_BLOCK_ATTRIBUTE_NAME=@@[a-z]+
 MODEL_FIELD_ATTRIBUTE_NAME=@[a-z]+
 ENTITY_NAME=[A-Za-z][a-zA-Z_0-9]*
-BLOCK_NAME=[A-Za-z][a-zA-Z_0-9]*
 FUNCTION_NAME=[a-z]+
 
-%state BLOCK_DEF, MODEL_BLOCK_DEF, ENUM_BLOCK_DEF
 %%
 
-<MODEL_BLOCK_DEF> {
-    {BLOCK_NAME}                            { return MODEL_NAME; }
-}
-
-<ENUM_BLOCK_DEF> {
-    {BLOCK_NAME}                            { return ENUM_NAME; }
-}
-
-<BLOCK_DEF> {
-    {BLOCK_NAME}                            { return BLOCK_NAME; }
-
-    // Reset to initial state when entering block
-    <MODEL_BLOCK_DEF, ENUM_BLOCK_DEF> "{"   { yybegin(YYINITIAL); return L_CURLY; }
-}
-
 <YYINITIAL> {
-  "}"                               { return R_CURLY; }
-  "["                               { return L_BRACKET; }
-  "]"                               { return R_BRACKET; }
-  "("                               { return L_PAREN; }
-  ")"                               { return R_PAREN; }
-  ","                               { return COMMA; }
-  "="                               { return EQ; }
-  "?"                               { return QUESTION_MARK; }
-  ":"                               { return COLON; }
-
-  "datasource"                      { yybegin(BLOCK_DEF); return KEYWORD_DATASOURCE; }
-  "generator"                       { yybegin(BLOCK_DEF); return KEYWORD_GENERATOR; }
-  "model"                           { yybegin(MODEL_BLOCK_DEF); return KEYWORD_MODEL; }
-  "enum"                            { yybegin(ENUM_BLOCK_DEF); return KEYWORD_ENUM; }
-
-  "provider"                        { return FIELD_PROVIDER; }
-  "url"                             { return FIELD_URL; }
-  "output"                          { return FIELD_OUTPUT; }
+  "datasource"                      { return KEYWORD_DATASOURCE; }
+  "generator"                       { return KEYWORD_GENERATOR; }
+  "model"                           { return KEYWORD_MODEL; }
+  "type"                            { return KEYWORD_TYPE; }
+  "enum"                            { return KEYWORD_ENUM; }
 
   {STRING}                          { return STRING; }
   {BOOLEAN}                         { return BOOLEAN; }
@@ -81,8 +51,19 @@ FUNCTION_NAME=[a-z]+
   {DOUBLE_COMMENT}                  { return DOUBLE_COMMENT; }
   {MODEL_BLOCK_ATTRIBUTE_NAME}      { return MODEL_BLOCK_ATTRIBUTE_NAME; }
   {MODEL_FIELD_ATTRIBUTE_NAME}      { return MODEL_FIELD_ATTRIBUTE_NAME; }
+  {FUNCTION_NAME}/\s*\(             { return FUNCTION_NAME; }
   {ENTITY_NAME}                     { return ENTITY_NAME; }
-  {FUNCTION_NAME}/\s*\(             { return FUNCTION_CALL; }
+
+  "}"                               { return R_CURLY; }
+  "{"                               { return L_CURLY; }
+  "["                               { return L_BRACKET; }
+  "]"                               { return R_BRACKET; }
+  "("                               { return L_PAREN; }
+  ")"                               { return R_PAREN; }
+  ","                               { return COMMA; }
+  "="                               { return EQ; }
+  "?"                               { return QUESTION_MARK; }
+  ":"                               { return COLON; }
 }
 
 {EOL}         { return EOL; }

@@ -11,14 +11,14 @@ import static io.techtrails.intellij.prisma.psi.PrismaTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import io.techtrails.intellij.prisma.psi.*;
 
-public class PrismaModelAttributeParamNameImpl extends ASTWrapperPsiElement implements PrismaModelAttributeParamName {
+public class PrismaEnumConstantImpl extends ASTWrapperPsiElement implements PrismaEnumConstant {
 
-  public PrismaModelAttributeParamNameImpl(@NotNull ASTNode node) {
+  public PrismaEnumConstantImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PrismaVisitor visitor) {
-    visitor.visitModelAttributeParamName(this);
+    visitor.visitEnumConstant(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {

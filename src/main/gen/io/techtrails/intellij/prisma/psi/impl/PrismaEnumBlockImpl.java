@@ -33,8 +33,8 @@ public class PrismaEnumBlockImpl extends PrismaBlockImpl implements PrismaEnumBl
 
   @Override
   @Nullable
-  public PsiElement getEnumName() {
-    return findChildByType(ENUM_NAME);
+  public PrismaTypeName getTypeName() {
+    return findChildByClass(PrismaTypeName.class);
   }
 
 }

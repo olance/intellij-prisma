@@ -5,16 +5,13 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface PrismaModelAttributeParamValue extends PsiElement {
+public interface PrismaFieldValue extends PsiElement {
+
+  @NotNull
+  List<PrismaFieldValue> getFieldValueList();
 
   @Nullable
   PsiElement getBoolean();
-
-  @Nullable
-  PsiElement getEntityName();
-
-  @Nullable
-  PsiElement getFunctionCall();
 
   @Nullable
   PsiElement getNumber();

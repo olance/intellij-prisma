@@ -1,11 +1,9 @@
 package io.techtrails.intellij.prisma
 
-import com.intellij.lexer.Lexer
 import com.intellij.openapi.editor.*
 import com.intellij.openapi.editor.colors.*
 import com.intellij.openapi.editor.colors.TextAttributesKey.*
 import com.intellij.openapi.fileTypes.*
-import com.intellij.psi.*
 import com.intellij.psi.tree.*
 
 import io.techtrails.intellij.prisma.psi.*
@@ -42,8 +40,8 @@ class PrismaSyntaxHighlighter : SyntaxHighlighterBase() {
                 "PRISMA_ENTITY_NAME",
                 DefaultLanguageHighlighterColors.IDENTIFIER
         )
-        private val FUNCTION_CALL = createTextAttributesKey(
-                "PRISMA_FUNCTION_CALL",
+        private val FUNCTION_NAME = createTextAttributesKey(
+                "PRISMA_FUNCTION_NAME",
                 DefaultLanguageHighlighterColors.FUNCTION_CALL
         )
 
@@ -73,7 +71,7 @@ class PrismaSyntaxHighlighter : SyntaxHighlighterBase() {
 
         private val BLOCK_NAME_KEYS = arrayOf(BLOCK_NAME)
         private val ENTITY_NAME_KEYS = arrayOf(ENTITY_NAME)
-        private val FUNCTION_CALL_KEYS = arrayOf(FUNCTION_CALL)
+        private val FUNCTION_NAME_KEYS = arrayOf(FUNCTION_NAME)
 
         private val BRACES_KEYS = arrayOf(BRACES)
         private val BRACKETS_KEYS = arrayOf(BRACKETS)
@@ -88,14 +86,13 @@ class PrismaSyntaxHighlighter : SyntaxHighlighterBase() {
         PrismaTypes.TRIPLE_COMMENT -> TRIPLE_COMMENT_KEYS
 
         PrismaTypes.KEYWORD_DATASOURCE, PrismaTypes.KEYWORD_GENERATOR, PrismaTypes.KEYWORD_MODEL,
-        PrismaTypes.KEYWORD_ENUM, PrismaTypes.BOOLEAN, PrismaTypes.FIELD_PROVIDER, PrismaTypes.FIELD_OUTPUT,
-        PrismaTypes.FIELD_URL -> KEYWORD_KEYS
+        PrismaTypes.KEYWORD_TYPE, PrismaTypes.KEYWORD_ENUM, PrismaTypes.BOOLEAN -> KEYWORD_KEYS
         PrismaTypes.STRING -> STRING_KEYS
         PrismaTypes.NUMBER -> NUMBER_KEYS
 
         PrismaTypes.BLOCK_NAME -> BLOCK_NAME_KEYS
         PrismaTypes.ENTITY_NAME -> ENTITY_NAME_KEYS
-        PrismaTypes.FUNCTION_CALL -> FUNCTION_CALL_KEYS
+        PrismaTypes.FUNCTION_NAME -> FUNCTION_NAME_KEYS
 
         PrismaTypes.L_CURLY, PrismaTypes.R_CURLY -> BRACES_KEYS
         PrismaTypes.L_BRACKET, PrismaTypes.R_BRACKET -> BRACKETS_KEYS

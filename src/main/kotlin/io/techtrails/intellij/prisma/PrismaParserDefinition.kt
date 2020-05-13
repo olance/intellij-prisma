@@ -3,6 +3,7 @@ package io.techtrails.intellij.prisma
 import com.intellij.lang.ASTNode
 import com.intellij.lang.Language
 import com.intellij.lang.ParserDefinition
+import com.intellij.lang.ParserDefinition.*
 import com.intellij.openapi.project.Project
 import com.intellij.psi.FileViewProvider
 import com.intellij.psi.PsiElement
@@ -31,4 +32,8 @@ class PrismaParserDefinition : ParserDefinition {
     override fun createParser(project: Project?) = PrismaParser()
 
     override fun createElement(node: ASTNode?): PsiElement = Factory.createElement(node)
+
+    override fun spaceExistanceTypeBetweenTokens(left: ASTNode?, right: ASTNode?): SpaceRequirements {
+        return SpaceRequirements.MAY
+    }
 }

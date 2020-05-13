@@ -11,19 +11,25 @@ import static io.techtrails.intellij.prisma.psi.PrismaTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import io.techtrails.intellij.prisma.psi.*;
 
-public class PrismaModelTypeModifierImpl extends ASTWrapperPsiElement implements PrismaModelTypeModifier {
+public class PrismaEnumConstantValueImpl extends ASTWrapperPsiElement implements PrismaEnumConstantValue {
 
-  public PrismaModelTypeModifierImpl(@NotNull ASTNode node) {
+  public PrismaEnumConstantValueImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PrismaVisitor visitor) {
-    visitor.visitModelTypeModifier(this);
+    visitor.visitEnumConstantValue(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof PrismaVisitor) accept((PrismaVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getString() {
+    return findNotNullChildByType(STRING);
   }
 
 }

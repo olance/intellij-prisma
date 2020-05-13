@@ -15,6 +15,7 @@
     psiImplUtilClass = "io.techtrails.intellij.prisma.psi.impl.PrismaPsiImplUtil"
 
     extends('.*-block') = block
+    extends('type-alias') = block
 
     tokens = [
         EOL = "regexp:\r|\n|\r\n"
@@ -41,22 +42,14 @@
         KEYWORD_DATASOURCE = 'datasource'
         KEYWORD_GENERATOR = 'generator'
         KEYWORD_MODEL = 'model'
+        KEYWORD_TYPE = 'type'
         KEYWORD_ENUM = 'enum'
-
-        FIELD_PROVIDER = 'provider'
-        FIELD_URL = 'url'
-        FIELD_OUTPUT = 'output'
 
         MODEL_BLOCK_ATTRIBUTE_NAME = 'regexp:@@[a-z]+'
         MODEL_FIELD_ATTRIBUTE_NAME = 'regexp:@[a-z]+'
 
-        ENTITY_NAME = 'regexp:[A-Za-z]\w*'
-        BLOCK_NAME
-        MODEL_NAME
-        ENUM_NAME
-
-        MODEL_TYPE_NAME = 'regexp:[A-Za-z]\w*(\[]|\?)?'
-        FUNCTION_CALL = 'regexp:[a-z]+\s*(?:\()'
+        ENTITY_NAME
+        FUNCTION_NAME
     ]
 }
 
@@ -65,37 +58,39 @@ private root-item ::= !<<eof>> block | comment | EOL
 
 private comment ::= (TRIPLE_COMMENT | DOUBLE_COMMENT)
 
-private field-value ::= scalar-value | array | env-var-value
+field-value ::= scalar-value | array | env-var-value
 private scalar-value ::= NUMBER | BOOLEAN | STRING
 private array ::= '[' (field-value (',' field-value)*)? ']' { pin(".*")=1 }
-private string-or-env ::= STRING | env-var-value
 private env-var-value ::= 'env' '(' STRING ')'
 
+field-name ::= ENTITY_NAME
+block-name ::= ENTITY_NAME
+type-name  ::= ENTITY_NAME
+identifier ::= ENTITY_NAME
 
-block               ::= datasource-block | generator-block | model-block | enum-block
-datasource-block    ::= 'datasource'    BLOCK_NAME '{' EOL? ((datasource-block-statement comment? EOL)  | comment | EOL)* '}' { pin=1 }
-generator-block     ::= 'generator'     BLOCK_NAME '{' EOL? ((generator-block-statement comment? EOL)   | comment | EOL)* '}' { pin=1 }
-model-block         ::= 'model'         MODEL_NAME '{' EOL? ((model-block-statement comment? EOL)       | comment | EOL)* '}' { pin=1 }
-enum-block          ::= 'enum'          ENUM_NAME  '{' EOL? ((enum-block-statement comment? EOL)        | comment | EOL)* '}' { pin=1 }
+block           ::= config-block | model-block | type-alias | enum-block
+config-block    ::= ('datasource' | 'generator') block-name '{' EOL? ((config-block-statement comment? EOL)  | comment | EOL)* '}' { pin=1 }
+model-block     ::= 'model' type-name '{' EOL? ((model-block-statement comment? EOL) | comment | EOL)* '}' { pin=1 }
+type-alias      ::= 'type'  type-name '=' model-field-type-and-attrs comment? EOL { pin=1 }
+enum-block      ::= 'enum'  type-name '{' EOL? ((enum-block-statement comment? EOL)  | comment | EOL)* '}' { pin=1 }
 
-datasource-block-statement ::= ('provider' '=' STRING | 'url' '=' string-or-env) { pin(".*")=1 }
+config-block-statement ::= (field-name '=' field-value) { pin(".*")=1 }
 
-generator-block-statement ::= generator-block-field | generator-config-field
-private generator-block-field ::= ('provider' '=' STRING | 'output' '=' string-or-env) { pin(".*")=1 }
-private generator-config-field ::= ENTITY_NAME '=' field-value { pin=1 }
+model-block-statement ::= model-field-definition | model-attribute
+private model-field-definition ::= field-name model-field-type-and-attrs { pin=1 }
+private model-field-type-and-attrs ::= field-type (field-attribute (EOL? field-attribute)*)?
+field-type ::= type-name type-modifier?
+type-modifier ::= '?' | '[' + ']'
 
-model-block-statement ::= model-field-definition | model-block-attribute
-private model-field-definition ::= ENTITY_NAME model-field-type (model-field-attribute (EOL? model-field-attribute)*)? { pin=1 }
-model-field-type ::= ENTITY_NAME model-type-modifier?
-model-type-modifier ::= '?' | '[' + ']'
+private field-attribute ::= MODEL_FIELD_ATTRIBUTE_NAME attribute-args?
+private model-attribute ::= MODEL_BLOCK_ATTRIBUTE_NAME attribute-args?
+private attribute-args ::= '(' attribute-arg-name? attribute-arg-value (',' attribute-arg-name attribute-arg-value)* ')' { pin(".*")=2 }
+attribute-arg-name ::= ENTITY_NAME ':'
+private attribute-arg-value ::= attribute-arg-value-scalar | attribute-arg-value-array | model-function
+private attribute-arg-value-scalar ::= STRING | NUMBER | BOOLEAN | identifier
+private attribute-arg-value-array ::= '[' (attribute-arg-value-scalar | attribute-arg-value-array (',' attribute-arg-value-scalar | attribute-arg-value-array)*)? ']'
+private model-function ::= FUNCTION_NAME '(' ')'
 
-model-field-attribute ::= MODEL_FIELD_ATTRIBUTE_NAME model-attribute-params?
-model-block-attribute ::= MODEL_BLOCK_ATTRIBUTE_NAME model-attribute-params?
-private model-attribute-params ::= '(' model-attribute-param-name? model-attribute-param-value (',' model-attribute-param-name model-attribute-param-value)* ')' { pin(".*")=1 }
-model-attribute-param-name ::= ENTITY_NAME ':'
-model-attribute-param-value ::= model-attribute-param-value-scalar | model-attribute-param-value-array | model-function
-private model-attribute-param-value-scalar ::= ENTITY_NAME | STRING | NUMBER | BOOLEAN
-private model-attribute-param-value-array ::= '[' (model-attribute-param-value-scalar (',' model-attribute-param-value-scalar)*)? ']'
-private model-function ::= FUNCTION_CALL '(' ')'
-
-enum-block-statement ::= ENTITY_NAME ('=' STRING)? { pin(".*")=1 }
+enum-constant ::= ENTITY_NAME
+enum-constant-value ::= STRING
+enum-block-statement ::= enum-constant ('=' enum-constant-value)? { pin(".*")=1 }

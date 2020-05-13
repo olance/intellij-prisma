@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface PrismaDatasourceBlock extends PrismaBlock {
+public interface PrismaIdentifier extends PsiElement {
 
   @NotNull
-  List<PrismaDatasourceBlockStatement> getDatasourceBlockStatementList();
-
-  @Nullable
-  PsiElement getBlockName();
+  PsiElement getEntityName();
 
 }

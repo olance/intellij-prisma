@@ -8,46 +8,43 @@ import io.techtrails.intellij.prisma.psi.impl.*;
 
 public interface PrismaTypes {
 
+  IElementType ATTRIBUTE_ARG_NAME = new PrismaElementType("ATTRIBUTE_ARG_NAME");
   IElementType BLOCK = new PrismaElementType("BLOCK");
-  IElementType DATASOURCE_BLOCK = new PrismaElementType("DATASOURCE_BLOCK");
-  IElementType DATASOURCE_BLOCK_STATEMENT = new PrismaElementType("DATASOURCE_BLOCK_STATEMENT");
+  IElementType BLOCK_NAME = new PrismaElementType("BLOCK_NAME");
+  IElementType CONFIG_BLOCK = new PrismaElementType("CONFIG_BLOCK");
+  IElementType CONFIG_BLOCK_STATEMENT = new PrismaElementType("CONFIG_BLOCK_STATEMENT");
   IElementType ENUM_BLOCK = new PrismaElementType("ENUM_BLOCK");
   IElementType ENUM_BLOCK_STATEMENT = new PrismaElementType("ENUM_BLOCK_STATEMENT");
-  IElementType GENERATOR_BLOCK = new PrismaElementType("GENERATOR_BLOCK");
-  IElementType GENERATOR_BLOCK_STATEMENT = new PrismaElementType("GENERATOR_BLOCK_STATEMENT");
-  IElementType MODEL_ATTRIBUTE_PARAM_NAME = new PrismaElementType("MODEL_ATTRIBUTE_PARAM_NAME");
-  IElementType MODEL_ATTRIBUTE_PARAM_VALUE = new PrismaElementType("MODEL_ATTRIBUTE_PARAM_VALUE");
+  IElementType ENUM_CONSTANT = new PrismaElementType("ENUM_CONSTANT");
+  IElementType ENUM_CONSTANT_VALUE = new PrismaElementType("ENUM_CONSTANT_VALUE");
+  IElementType FIELD_NAME = new PrismaElementType("FIELD_NAME");
+  IElementType FIELD_TYPE = new PrismaElementType("FIELD_TYPE");
+  IElementType FIELD_VALUE = new PrismaElementType("FIELD_VALUE");
+  IElementType IDENTIFIER = new PrismaElementType("IDENTIFIER");
   IElementType MODEL_BLOCK = new PrismaElementType("MODEL_BLOCK");
-  IElementType MODEL_BLOCK_ATTRIBUTE = new PrismaElementType("MODEL_BLOCK_ATTRIBUTE");
   IElementType MODEL_BLOCK_STATEMENT = new PrismaElementType("MODEL_BLOCK_STATEMENT");
-  IElementType MODEL_FIELD_ATTRIBUTE = new PrismaElementType("MODEL_FIELD_ATTRIBUTE");
-  IElementType MODEL_FIELD_TYPE = new PrismaElementType("MODEL_FIELD_TYPE");
-  IElementType MODEL_TYPE_MODIFIER = new PrismaElementType("MODEL_TYPE_MODIFIER");
+  IElementType TYPE_ALIAS = new PrismaElementType("TYPE_ALIAS");
+  IElementType TYPE_MODIFIER = new PrismaElementType("TYPE_MODIFIER");
+  IElementType TYPE_NAME = new PrismaElementType("TYPE_NAME");
 
-  IElementType BLOCK_NAME = new PrismaTokenType("BLOCK_NAME");
   IElementType BOOLEAN = new PrismaTokenType("BOOLEAN");
   IElementType COLON = new PrismaTokenType(":");
   IElementType COMMA = new PrismaTokenType(",");
   IElementType DOUBLE_COMMENT = new PrismaTokenType("DOUBLE_COMMENT");
   IElementType ENTITY_NAME = new PrismaTokenType("ENTITY_NAME");
-  IElementType ENUM_NAME = new PrismaTokenType("ENUM_NAME");
   IElementType EOL = new PrismaTokenType("EOL");
   IElementType EQ = new PrismaTokenType("=");
-  IElementType FIELD_OUTPUT = new PrismaTokenType("output");
-  IElementType FIELD_PROVIDER = new PrismaTokenType("provider");
-  IElementType FIELD_URL = new PrismaTokenType("url");
-  IElementType FUNCTION_CALL = new PrismaTokenType("FUNCTION_CALL");
+  IElementType FUNCTION_NAME = new PrismaTokenType("FUNCTION_NAME");
   IElementType KEYWORD_DATASOURCE = new PrismaTokenType("datasource");
   IElementType KEYWORD_ENUM = new PrismaTokenType("enum");
   IElementType KEYWORD_GENERATOR = new PrismaTokenType("generator");
   IElementType KEYWORD_MODEL = new PrismaTokenType("model");
+  IElementType KEYWORD_TYPE = new PrismaTokenType("type");
   IElementType L_BRACKET = new PrismaTokenType("[");
   IElementType L_CURLY = new PrismaTokenType("{");
   IElementType L_PAREN = new PrismaTokenType("(");
   IElementType MODEL_BLOCK_ATTRIBUTE_NAME = new PrismaTokenType("MODEL_BLOCK_ATTRIBUTE_NAME");
   IElementType MODEL_FIELD_ATTRIBUTE_NAME = new PrismaTokenType("MODEL_FIELD_ATTRIBUTE_NAME");
-  IElementType MODEL_NAME = new PrismaTokenType("MODEL_NAME");
-  IElementType MODEL_TYPE_NAME = new PrismaTokenType("MODEL_TYPE_NAME");
   IElementType NUMBER = new PrismaTokenType("NUMBER");
   IElementType QUESTION_MARK = new PrismaTokenType("?");
   IElementType R_BRACKET = new PrismaTokenType("]");
@@ -59,11 +56,20 @@ public interface PrismaTypes {
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-      if (type == DATASOURCE_BLOCK) {
-        return new PrismaDatasourceBlockImpl(node);
+      if (type == ATTRIBUTE_ARG_NAME) {
+        return new PrismaAttributeArgNameImpl(node);
       }
-      else if (type == DATASOURCE_BLOCK_STATEMENT) {
-        return new PrismaDatasourceBlockStatementImpl(node);
+      else if (type == BLOCK) {
+        return new PrismaBlockImpl(node);
+      }
+      else if (type == BLOCK_NAME) {
+        return new PrismaBlockNameImpl(node);
+      }
+      else if (type == CONFIG_BLOCK) {
+        return new PrismaConfigBlockImpl(node);
+      }
+      else if (type == CONFIG_BLOCK_STATEMENT) {
+        return new PrismaConfigBlockStatementImpl(node);
       }
       else if (type == ENUM_BLOCK) {
         return new PrismaEnumBlockImpl(node);
@@ -71,35 +77,38 @@ public interface PrismaTypes {
       else if (type == ENUM_BLOCK_STATEMENT) {
         return new PrismaEnumBlockStatementImpl(node);
       }
-      else if (type == GENERATOR_BLOCK) {
-        return new PrismaGeneratorBlockImpl(node);
+      else if (type == ENUM_CONSTANT) {
+        return new PrismaEnumConstantImpl(node);
       }
-      else if (type == GENERATOR_BLOCK_STATEMENT) {
-        return new PrismaGeneratorBlockStatementImpl(node);
+      else if (type == ENUM_CONSTANT_VALUE) {
+        return new PrismaEnumConstantValueImpl(node);
       }
-      else if (type == MODEL_ATTRIBUTE_PARAM_NAME) {
-        return new PrismaModelAttributeParamNameImpl(node);
+      else if (type == FIELD_NAME) {
+        return new PrismaFieldNameImpl(node);
       }
-      else if (type == MODEL_ATTRIBUTE_PARAM_VALUE) {
-        return new PrismaModelAttributeParamValueImpl(node);
+      else if (type == FIELD_TYPE) {
+        return new PrismaFieldTypeImpl(node);
+      }
+      else if (type == FIELD_VALUE) {
+        return new PrismaFieldValueImpl(node);
+      }
+      else if (type == IDENTIFIER) {
+        return new PrismaIdentifierImpl(node);
       }
       else if (type == MODEL_BLOCK) {
         return new PrismaModelBlockImpl(node);
       }
-      else if (type == MODEL_BLOCK_ATTRIBUTE) {
-        return new PrismaModelBlockAttributeImpl(node);
-      }
       else if (type == MODEL_BLOCK_STATEMENT) {
         return new PrismaModelBlockStatementImpl(node);
       }
-      else if (type == MODEL_FIELD_ATTRIBUTE) {
-        return new PrismaModelFieldAttributeImpl(node);
+      else if (type == TYPE_ALIAS) {
+        return new PrismaTypeAliasImpl(node);
       }
-      else if (type == MODEL_FIELD_TYPE) {
-        return new PrismaModelFieldTypeImpl(node);
+      else if (type == TYPE_MODIFIER) {
+        return new PrismaTypeModifierImpl(node);
       }
-      else if (type == MODEL_TYPE_MODIFIER) {
-        return new PrismaModelTypeModifierImpl(node);
+      else if (type == TYPE_NAME) {
+        return new PrismaTypeNameImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

@@ -5,12 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface PrismaEnumBlockStatement extends PsiElement {
-
-  @NotNull
-  PrismaEnumConstant getEnumConstant();
+public interface PrismaFieldType extends PsiElement {
 
   @Nullable
-  PrismaEnumConstantValue getEnumConstantValue();
+  PrismaTypeModifier getTypeModifier();
+
+  @NotNull
+  PrismaTypeName getTypeName();
 
 }

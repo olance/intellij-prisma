@@ -8,16 +8,17 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static io.techtrails.intellij.prisma.psi.PrismaTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import io.techtrails.intellij.prisma.psi.*;
 
-public class PrismaGeneratorBlockImpl extends PrismaBlockImpl implements PrismaGeneratorBlock {
+public class PrismaBlockNameImpl extends ASTWrapperPsiElement implements PrismaBlockName {
 
-  public PrismaGeneratorBlockImpl(@NotNull ASTNode node) {
+  public PrismaBlockNameImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PrismaVisitor visitor) {
-    visitor.visitGeneratorBlock(this);
+    visitor.visitBlockName(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -27,14 +28,8 @@ public class PrismaGeneratorBlockImpl extends PrismaBlockImpl implements PrismaG
 
   @Override
   @NotNull
-  public List<PrismaGeneratorBlockStatement> getGeneratorBlockStatementList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PrismaGeneratorBlockStatement.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getBlockName() {
-    return findChildByType(BLOCK_NAME);
+  public PsiElement getEntityName() {
+    return findNotNullChildByType(ENTITY_NAME);
   }
 
 }

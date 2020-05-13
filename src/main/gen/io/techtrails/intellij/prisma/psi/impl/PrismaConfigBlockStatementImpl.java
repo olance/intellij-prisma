@@ -11,14 +11,14 @@ import static io.techtrails.intellij.prisma.psi.PrismaTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import io.techtrails.intellij.prisma.psi.*;
 
-public class PrismaGeneratorBlockStatementImpl extends ASTWrapperPsiElement implements PrismaGeneratorBlockStatement {
+public class PrismaConfigBlockStatementImpl extends ASTWrapperPsiElement implements PrismaConfigBlockStatement {
 
-  public PrismaGeneratorBlockStatementImpl(@NotNull ASTNode node) {
+  public PrismaConfigBlockStatementImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PrismaVisitor visitor) {
-    visitor.visitGeneratorBlockStatement(this);
+    visitor.visitConfigBlockStatement(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -27,21 +27,15 @@ public class PrismaGeneratorBlockStatementImpl extends ASTWrapperPsiElement impl
   }
 
   @Override
-  @Nullable
-  public PsiElement getBoolean() {
-    return findChildByType(BOOLEAN);
+  @NotNull
+  public PrismaFieldName getFieldName() {
+    return findNotNullChildByClass(PrismaFieldName.class);
   }
 
   @Override
   @Nullable
-  public PsiElement getEntityName() {
-    return findChildByType(ENTITY_NAME);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getNumber() {
-    return findChildByType(NUMBER);
+  public PrismaFieldValue getFieldValue() {
+    return findChildByClass(PrismaFieldValue.class);
   }
 
 }

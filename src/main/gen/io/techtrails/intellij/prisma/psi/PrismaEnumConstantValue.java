@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface PrismaGeneratorBlock extends PrismaBlock {
+public interface PrismaEnumConstantValue extends PsiElement {
 
   @NotNull
-  List<PrismaGeneratorBlockStatement> getGeneratorBlockStatementList();
-
-  @Nullable
-  PsiElement getBlockName();
+  PsiElement getString();
 
 }

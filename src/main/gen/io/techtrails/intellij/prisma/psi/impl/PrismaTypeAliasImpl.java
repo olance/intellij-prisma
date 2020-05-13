@@ -11,14 +11,14 @@ import static io.techtrails.intellij.prisma.psi.PrismaTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import io.techtrails.intellij.prisma.psi.*;
 
-public class PrismaModelBlockStatementImpl extends ASTWrapperPsiElement implements PrismaModelBlockStatement {
+public class PrismaTypeAliasImpl extends ASTWrapperPsiElement implements PrismaTypeAlias {
 
-  public PrismaModelBlockStatementImpl(@NotNull ASTNode node) {
+  public PrismaTypeAliasImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PrismaVisitor visitor) {
-    visitor.visitModelBlockStatement(this);
+    visitor.visitTypeAlias(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -30,12 +30,6 @@ public class PrismaModelBlockStatementImpl extends ASTWrapperPsiElement implemen
   @NotNull
   public List<PrismaAttributeArgName> getAttributeArgNameList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, PrismaAttributeArgName.class);
-  }
-
-  @Override
-  @Nullable
-  public PrismaFieldName getFieldName() {
-    return findChildByClass(PrismaFieldName.class);
   }
 
   @Override
@@ -52,8 +46,20 @@ public class PrismaModelBlockStatementImpl extends ASTWrapperPsiElement implemen
 
   @Override
   @Nullable
-  public PsiElement getModelBlockAttributeName() {
-    return findChildByType(MODEL_BLOCK_ATTRIBUTE_NAME);
+  public PrismaTypeName getTypeName() {
+    return findChildByClass(PrismaTypeName.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getDoubleComment() {
+    return findChildByType(DOUBLE_COMMENT);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getTripleComment() {
+    return findChildByType(TRIPLE_COMMENT);
   }
 
 }

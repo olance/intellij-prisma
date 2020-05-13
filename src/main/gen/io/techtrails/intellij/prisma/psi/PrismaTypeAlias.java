@@ -5,13 +5,10 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface PrismaModelBlockStatement extends PsiElement {
+public interface PrismaTypeAlias extends PsiElement {
 
   @NotNull
   List<PrismaAttributeArgName> getAttributeArgNameList();
-
-  @Nullable
-  PrismaFieldName getFieldName();
 
   @Nullable
   PrismaFieldType getFieldType();
@@ -20,6 +17,12 @@ public interface PrismaModelBlockStatement extends PsiElement {
   List<PrismaIdentifier> getIdentifierList();
 
   @Nullable
-  PsiElement getModelBlockAttributeName();
+  PrismaTypeName getTypeName();
+
+  @Nullable
+  PsiElement getDoubleComment();
+
+  @Nullable
+  PsiElement getTripleComment();
 
 }
