@@ -22,6 +22,7 @@
         <lang.syntaxHighlighterFactory language="Prisma"
                                        implementationClass="io.techtrails.intellij.prisma.PrismaSyntaxHighlighterFactory"/>
         <annotator language="Prisma" implementationClass="io.techtrails.intellij.prisma.PrismaAnnotator"/>
+        <colorSettingsPage implementation="io.techtrails.intellij.prisma.PrismaColorSettingsPage" />
     </extensions>
 
     <actions>
