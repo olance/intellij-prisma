@@ -1,14 +1,41 @@
 <idea-plugin>
     <id>io.techtrails.intellij.prisma</id>
-    <name>Prisma Support</name>
+    <name>Prisma Schema Language</name>
     <vendor email="olivier@techtrails.io" url="http://www.techtrails.io">Techtrails</vendor>
+    <idea-version since-build="201.3119"/>
 
     <description><![CDATA[
-    Adds support for Prisma 2 schema files (.prisma):
+    Adds support for Prisma 2 Schema Language files (.prisma).
+
+    <b>Upcoming:</b>
     <ul>
-        <li>Syntax highlighting</li>
+        <li>Better error highlighting, highlight "semantic" errors</li>
+        <li>Line commenter action</li>
+    </ul>
+
+    <b>Features:</b>
+    <ul>
+        <li>Prisma schema files recognition (with icon)</li>
+        <li>Syntax highlighting with specific Color Settings page tailored to the language tokens</li>
+        <li>Basic parsing error highlighting – still lots of improvement needed here</li>
     </ul>
     ]]></description>
+
+    <change-notes><![CDATA[
+      <b>v1.0.0</b>
+      <ul>
+        <li>Prisma Color Settings page for better control of syntax highlighting on Prisma-specific tokens</li>
+        <li>Very basic parsing error highlighting</li>
+        <li>Specific icon for dark UI</li>
+        <li>Compatibility for older IDEs versions</li>
+      </ul>
+
+      <b>v0.0.1</b>
+      <ul>
+        <li>Recognition of `.prisma` files</li>
+        <li>Very basic syntax highlighting (using default Color Scheme)</li>
+      </ul>
+    ]]></change-notes>
 
     <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->

@@ -7,11 +7,12 @@ This IntelliJ plugin aims to provide basic support for [Prisma's](https://prisma
 
 - [X] Prisma icon on `.prisma` files
 - [X] Syntax highlighting
-- [ ] Prisma-specific Color Scheme – being able to fine-tune syntax highlighting of Prisma-specific tokens
+- [X] Prisma-specific Color Scheme – being able to fine-tune syntax highlighting of Prisma-specific tokens
+- [ ] Error highlighting
+- [ ] Code formatter - *being able to automatically format a .prisma file*
 - [ ] Line commenter – *being able to comment the current line via a keyboard shortcut*
 - [ ] Code folding – *being able to fold/collapse blocks within the editor*
 - [ ] Code structure view - *being able to see the file's structure in the Structure tool window*
-- [ ] Code formatter - *being able to automatically format a .prisma file*
 - [ ] Usage finder - *being able to find usages of an entity*
 - [ ] Reference resolution - *being able to navigate from an entity usage to its definition*
 - [ ] Code completion - *being able to provide autocompleted keywords/entity names*
@@ -22,14 +23,16 @@ This IntelliJ plugin aims to provide basic support for [Prisma's](https://prisma
 
 ### Syntax Highlighting
 
-As it is, the plugin provides some syntax highlighting.
-However it's pretty basic, as it tries to map all tokens from the Prisma Lexer to existing, 
-default Color Scheme types provided by the Jetbrains IDE.
+Syntax Highlighting is tailored to the Schema Language tokens and allows you to fully
+customize the file's rendering through a dedicated Color Settings page.
 
-As soon as a Prisma-specific Color Scheme is implemented, things will get much better and 
-should allow finer-grained highlighting of the different elements of Prisma schemas.
+![Syntax Highlighting](../media/color-settings.gif?raw=true)
 
-![Syntax Highlighting](../media/syntax-highlighting.jpeg?raw=true)
+![Syntax Highlighting](../media/syntax-highlighting.png?raw=true)
+
+## Contributing
+
+You're more than welcome to open issues and submit PR to help me maintain & improve this plugin!
 
 ## License
 
