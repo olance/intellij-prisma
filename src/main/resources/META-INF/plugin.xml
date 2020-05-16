@@ -21,6 +21,7 @@
                                implementationClass="io.techtrails.intellij.prisma.PrismaParserDefinition"/>
         <lang.syntaxHighlighterFactory language="Prisma"
                                        implementationClass="io.techtrails.intellij.prisma.PrismaSyntaxHighlighterFactory"/>
+        <annotator language="Prisma" implementationClass="io.techtrails.intellij.prisma.PrismaAnnotator"/>
     </extensions>
 
     <actions>
