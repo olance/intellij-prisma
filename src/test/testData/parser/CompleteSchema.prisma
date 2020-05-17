@@ -10,8 +10,10 @@ generator client {
   binaryTargets = ["native"]
 }
 
+type ID = Int @id @default(autoincrement())
+
 model User {
-  id      Int      @id @default(autoincrement())
+  id      ID
   email   String   @unique
   name    String?
   role    Role     @default(USER)
