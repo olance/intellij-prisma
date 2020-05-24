@@ -14,6 +14,7 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
+    implementation("com.google.code.gson:gson:2.8.6")
     testImplementation("io.mockk:mockk:1.10.0")
 }
 
