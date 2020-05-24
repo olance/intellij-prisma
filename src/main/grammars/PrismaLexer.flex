@@ -27,7 +27,7 @@ WHITE_SPACE=[\t ]+
 
 STRING=\"[\w/._%@:?=-]*\"
 BOOLEAN=(true|false)
-NUMBER=((0(x|X)[0-9a-fA-F]*)|(\\+|-)?\\b(([0-9]+\\.?[0-9]*)|(\\.[0-9]+))((e|E)(\\+|-)?[0-9]+)?)([LlFfUuDdg]|UL|ul)?\\b
+NUMBER=((0(x|X)[0-9a-fA-F]*)|(\+|-)?(([0-9]+\.?[0-9]*)|(\.[0-9]+))((e|E)(\+|-)?[0-9]+)?)([LlFfUuDdg]|UL|ul)?
 TRIPLE_COMMENT="///".*
 DOUBLE_COMMENT="//".*
 MODEL_BLOCK_ATTRIBUTE_NAME=@@[a-z]+

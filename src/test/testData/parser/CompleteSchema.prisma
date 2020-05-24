@@ -16,6 +16,7 @@ model User {
   id      ID
   email   String   @unique
   name    String?
+  age     Int      @default(-1)
   role    Role     @default(USER)
   posts   Post[]
   profile Profile?
