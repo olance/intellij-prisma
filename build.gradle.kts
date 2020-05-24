@@ -14,6 +14,7 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
+    testImplementation("io.mockk:mockk:1.10.0")
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/

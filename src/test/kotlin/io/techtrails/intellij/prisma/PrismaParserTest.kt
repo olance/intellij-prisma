@@ -1,5 +1,6 @@
+package io.techtrails.intellij.prisma
+
 import com.intellij.testFramework.ParsingTestCase
-import io.techtrails.intellij.prisma.PrismaParserDefinition
 
 class PrismaParserTest : ParsingTestCase("parser", "prisma", PrismaParserDefinition()) {
     fun testCompleteSchema() = doTest(true)
