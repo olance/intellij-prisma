@@ -1,1 +1,3 @@
 **/testData/** linguist-vendored
+.github/workflows/default.yml merge=ours
+gradle.properties merge=ours

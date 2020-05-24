@@ -2,7 +2,6 @@
     <id>io.techtrails.intellij.prisma</id>
     <name>Prisma Support</name>
     <vendor email="olivier@techtrails.io" url="http://www.techtrails.io">Techtrails</vendor>
-    <idea-version since-build="201.3119"/>
 
     <description><![CDATA[
     Adds support for Prisma 2 Schema Language files (.prisma).

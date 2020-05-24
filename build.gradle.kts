@@ -16,7 +16,9 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version = "2020.1.1"
+    val ideaVersion: String by project
+    version = ideaVersion
+
     pluginName = rootProject.name
 }
 
@@ -28,6 +30,14 @@ tasks.withType<JavaCompile> {
 }
 
 tasks {
+    patchPluginXml {
+        val pluginSinceBuild: String by project
+        val pluginUntilBuild: String by project
+
+        sinceBuild(pluginSinceBuild)
+        untilBuild(pluginUntilBuild)
+    }
+
     compileKotlin {
         kotlinOptions.jvmTarget = "1.8"
     }
