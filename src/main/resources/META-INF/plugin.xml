@@ -53,8 +53,11 @@
     <depends>com.intellij.modules.lang</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileType name="Prisma" implementationClass="io.techtrails.intellij.prisma.PrismaFileType"
-                  fieldName="INSTANCE" language="Prisma" extensions="prisma"/>
+<!-- This is being used only in older versions, as the fileTypeFactory extension point has been replaced by fileType -->
+        <fileTypeFactory implementation="io.techtrails.intellij.prisma.PrismaFileTypeFactory"/>
+<!--        <fileType name="Prisma" implementationClass="io.techtrails.intellij.prisma.PrismaFileType"-->
+<!--                  fieldName="INSTANCE" language="Prisma" extensions="prisma"/>-->
+<!-- /end fileType/fileTypeFactory -->
         <lang.parserDefinition language="Prisma"
                                implementationClass="io.techtrails.intellij.prisma.PrismaParserDefinition"/>
         <lang.syntaxHighlighterFactory language="Prisma"
