@@ -4,7 +4,9 @@ plugins {
 }
 
 group = "io.techtrails.intellij"
-version = "1.0.0"
+
+val pluginVersion: String by project
+version = pluginVersion
 
 repositories {
     mavenCentral()
@@ -18,7 +20,6 @@ dependencies {
 intellij {
     val ideaVersion: String by project
     version = ideaVersion
-
     pluginName = rootProject.name
 }
 
