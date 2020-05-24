@@ -21,6 +21,12 @@
     ]]></description>
 
     <change-notes><![CDATA[
+      <b>v1.0.1</b>
+      <ul>
+        <li>Fixes incorrect parsing of numbers</li>
+        <li>Compatibility for IDE versions 2019.2+</li>
+      </ul>
+
       <b>v1.0.0</b>
       <ul>
         <li>Prisma Color Settings page for better control of syntax highlighting on Prisma-specific tokens</li>
