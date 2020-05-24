@@ -2,7 +2,6 @@ package io.techtrails.intellij.prisma
 
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
-import com.intellij.lang.annotation.HighlightSeverity.INFORMATION
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.psi.PsiElement
 import io.techtrails.intellij.prisma.psi.*
@@ -21,6 +20,7 @@ class PrismaAnnotator : Annotator {
     }
 
     private fun AnnotationHolder.annotateSyntax(element: PsiElement, attr: TextAttributesKey) {
-        newSilentAnnotation(INFORMATION).range(element).textAttributes(attr).create()
+        val annotation = createInfoAnnotation(element, null)
+        annotation.textAttributes = attr
     }
 }
