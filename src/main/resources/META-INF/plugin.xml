@@ -4,7 +4,7 @@
     <vendor email="olivier@techtrails.io" url="http://www.techtrails.io">Techtrails</vendor>
 
     <description><![CDATA[
-    Adds support for Prisma 2 Schema Language files (.prisma).
+    <p>Adds support for Prisma 2 Schema Language files (.prisma).</p>
 
     <b>Upcoming:</b>
     <ul>
@@ -21,6 +21,12 @@
     ]]></description>
 
     <change-notes><![CDATA[
+      <b>v1.0.2</b>
+      <ul>
+        <li>Fix: allow @map and @@map attributes in enums</li>
+        <li>Chore: upgrade supported versions range</li>
+      </ul>
+
       <b>v1.0.1</b>
       <ul>
         <li>Fixes incorrect parsing of numbers</li>
