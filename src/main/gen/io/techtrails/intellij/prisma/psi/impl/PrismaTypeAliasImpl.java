@@ -8,19 +8,20 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static io.techtrails.intellij.prisma.psi.PrismaTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import io.techtrails.intellij.prisma.psi.*;
 
-public class PrismaTypeAliasImpl extends ASTWrapperPsiElement implements PrismaTypeAlias {
+public class PrismaTypeAliasImpl extends PrismaBlockImpl implements PrismaTypeAlias {
 
   public PrismaTypeAliasImpl(@NotNull ASTNode node) {
     super(node);
   }
 
+  @Override
   public void accept(@NotNull PrismaVisitor visitor) {
     visitor.visitTypeAlias(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof PrismaVisitor) accept((PrismaVisitor)visitor);
     else super.accept(visitor);

@@ -16,10 +16,12 @@ public class PrismaEnumBlockImpl extends PrismaBlockImpl implements PrismaEnumBl
     super(node);
   }
 
+  @Override
   public void accept(@NotNull PrismaVisitor visitor) {
     visitor.visitEnumBlock(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof PrismaVisitor) accept((PrismaVisitor)visitor);
     else super.accept(visitor);

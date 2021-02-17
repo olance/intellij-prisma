@@ -7,7 +7,4 @@ import com.intellij.psi.PsiElement;
 
 public interface PrismaBlock extends PsiElement {
 
-  @Nullable
-  PrismaTypeAlias getTypeAlias();
-
 }

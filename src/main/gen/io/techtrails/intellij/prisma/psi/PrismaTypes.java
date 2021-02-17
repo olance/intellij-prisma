@@ -59,9 +59,6 @@ public interface PrismaTypes {
       if (type == ATTRIBUTE_ARG_NAME) {
         return new PrismaAttributeArgNameImpl(node);
       }
-      else if (type == BLOCK) {
-        return new PrismaBlockImpl(node);
-      }
       else if (type == BLOCK_NAME) {
         return new PrismaBlockNameImpl(node);
       }

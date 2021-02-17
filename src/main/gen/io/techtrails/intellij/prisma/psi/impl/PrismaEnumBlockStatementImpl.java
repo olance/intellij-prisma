@@ -21,6 +21,7 @@ public class PrismaEnumBlockStatementImpl extends ASTWrapperPsiElement implement
     visitor.visitEnumBlockStatement(this);
   }
 
+  @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof PrismaVisitor) accept((PrismaVisitor)visitor);
     else super.accept(visitor);
@@ -28,14 +29,38 @@ public class PrismaEnumBlockStatementImpl extends ASTWrapperPsiElement implement
 
   @Override
   @NotNull
+  public List<PrismaAttributeArgName> getAttributeArgNameList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PrismaAttributeArgName.class);
+  }
+
+  @Override
+  @Nullable
   public PrismaEnumConstant getEnumConstant() {
-    return findNotNullChildByClass(PrismaEnumConstant.class);
+    return findChildByClass(PrismaEnumConstant.class);
   }
 
   @Override
   @Nullable
   public PrismaEnumConstantValue getEnumConstantValue() {
     return findChildByClass(PrismaEnumConstantValue.class);
+  }
+
+  @Override
+  @NotNull
+  public List<PrismaIdentifier> getIdentifierList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PrismaIdentifier.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getModelBlockAttributeName() {
+    return findChildByType(MODEL_BLOCK_ATTRIBUTE_NAME);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getModelFieldAttributeName() {
+    return findChildByType(MODEL_FIELD_ATTRIBUTE_NAME);
   }
 
 }

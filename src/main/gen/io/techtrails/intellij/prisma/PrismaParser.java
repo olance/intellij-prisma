@@ -36,7 +36,8 @@ public class PrismaParser implements PsiParser, LightPsiParser {
   }
 
   public static final TokenSet[] EXTENDS_SETS_ = new TokenSet[] {
-    create_token_set_(BLOCK, CONFIG_BLOCK, ENUM_BLOCK, MODEL_BLOCK),
+    create_token_set_(BLOCK, CONFIG_BLOCK, ENUM_BLOCK, MODEL_BLOCK,
+      TYPE_ALIAS),
   };
 
   /* ********************************************************** */
@@ -451,36 +452,16 @@ public class PrismaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // enum-constant ('=' enum-constant-value)?
+  // enum-constant-definition | model-attribute
   public static boolean enum_block_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_block_statement")) return false;
-    if (!nextTokenIs(b, ENTITY_NAME)) return false;
-    boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, ENUM_BLOCK_STATEMENT, null);
-    r = enum_constant(b, l + 1);
-    p = r; // pin = 1
-    r = r && enum_block_statement_1(b, l + 1);
-    exit_section_(b, l, m, r, p, null);
-    return r || p;
-  }
-
-  // ('=' enum-constant-value)?
-  private static boolean enum_block_statement_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "enum_block_statement_1")) return false;
-    enum_block_statement_1_0(b, l + 1);
-    return true;
-  }
-
-  // '=' enum-constant-value
-  private static boolean enum_block_statement_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "enum_block_statement_1_0")) return false;
-    boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_);
-    r = consumeToken(b, EQ);
-    p = r; // pin = 1
-    r = r && enum_constant_value(b, l + 1);
-    exit_section_(b, l, m, r, p, null);
-    return r || p;
+    if (!nextTokenIs(b, "<enum block statement>", ENTITY_NAME, MODEL_BLOCK_ATTRIBUTE_NAME)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, ENUM_BLOCK_STATEMENT, "<enum block statement>");
+    r = enum_constant_definition(b, l + 1);
+    if (!r) r = model_attribute(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
   }
 
   /* ********************************************************** */
@@ -493,6 +474,50 @@ public class PrismaParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, ENTITY_NAME);
     exit_section_(b, m, ENUM_CONSTANT, r);
     return r;
+  }
+
+  /* ********************************************************** */
+  // enum-constant ('=' enum-constant-value | field-attribute)?
+  static boolean enum_constant_definition(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enum_constant_definition")) return false;
+    if (!nextTokenIs(b, ENTITY_NAME)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_);
+    r = enum_constant(b, l + 1);
+    p = r; // pin = 1
+    r = r && enum_constant_definition_1(b, l + 1);
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  // ('=' enum-constant-value | field-attribute)?
+  private static boolean enum_constant_definition_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enum_constant_definition_1")) return false;
+    enum_constant_definition_1_0(b, l + 1);
+    return true;
+  }
+
+  // '=' enum-constant-value | field-attribute
+  private static boolean enum_constant_definition_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enum_constant_definition_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = enum_constant_definition_1_0_0(b, l + 1);
+    if (!r) r = field_attribute(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // '=' enum-constant-value
+  private static boolean enum_constant_definition_1_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enum_constant_definition_1_0_0")) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_);
+    r = consumeToken(b, EQ);
+    p = r; // pin = 1
+    r = r && enum_constant_value(b, l + 1);
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   /* ********************************************************** */

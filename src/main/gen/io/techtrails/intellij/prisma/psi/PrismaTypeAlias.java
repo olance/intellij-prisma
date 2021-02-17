@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface PrismaTypeAlias extends PsiElement {
+public interface PrismaTypeAlias extends PrismaBlock {
 
   @NotNull
   List<PrismaAttributeArgName> getAttributeArgNameList();

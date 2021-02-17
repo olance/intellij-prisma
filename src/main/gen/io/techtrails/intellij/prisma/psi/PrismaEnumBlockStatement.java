@@ -8,9 +8,21 @@ import com.intellij.psi.PsiElement;
 public interface PrismaEnumBlockStatement extends PsiElement {
 
   @NotNull
+  List<PrismaAttributeArgName> getAttributeArgNameList();
+
+  @Nullable
   PrismaEnumConstant getEnumConstant();
 
   @Nullable
   PrismaEnumConstantValue getEnumConstantValue();
+
+  @NotNull
+  List<PrismaIdentifier> getIdentifierList();
+
+  @Nullable
+  PsiElement getModelBlockAttributeName();
+
+  @Nullable
+  PsiElement getModelFieldAttributeName();
 
 }

@@ -93,4 +93,5 @@ private model-function ::= FUNCTION_NAME '(' ')'
 
 enum-constant ::= ENTITY_NAME
 enum-constant-value ::= STRING
-enum-block-statement ::= enum-constant ('=' enum-constant-value)? { pin(".*")=1 }
+private enum-constant-definition ::= enum-constant ('=' enum-constant-value | field-attribute)? { pin(".*")=1 }
+enum-block-statement ::= enum-constant-definition | model-attribute
