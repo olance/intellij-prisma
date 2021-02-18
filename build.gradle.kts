@@ -45,4 +45,9 @@ tasks {
     compileTestKotlin {
         kotlinOptions.jvmTarget = "1.8"
     }
+
+    publishPlugin {
+        val intellijPublishToken: String by project
+        token(intellijPublishToken)
+    }
 }
