@@ -21,6 +21,15 @@
     ]]></description>
 
     <change-notes><![CDATA[
+      <b>v1.0.3</b>
+      <ul>
+        <li>Chore: upgrade supported versions range for 2021 IDEs</li>
+        <li>
+            Fixes: fix grammar to allow multiple array items & uppercase chars in attribute names,
+            which in essence fixes support for @@unique, @@index, @updatedAt, ...
+        </li>
+      </ul>
+
       <b>v1.0.2</b>
       <ul>
         <li>Fix: allow @map and @@map attributes in enums</li>
