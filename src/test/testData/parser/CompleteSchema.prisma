@@ -22,6 +22,7 @@ model User {
   profile Profile?
 
   @@map("users")
+  @@index(fields: [name])
 }
 
 model Profile {
@@ -29,11 +30,14 @@ model Profile {
   bio     String
   user    User    @relation(fields: [userId], references: [id])
   userId  Int
+
+  @@unique([userId])
 }
 
 model Post {
   id         Int         @id @default(autoincrement())
   createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt @default(now())
   title      String
   published  Boolean     @default(false)
   author     User        @relation(fields: [authorId], references: [id])

@@ -45,8 +45,8 @@
         KEYWORD_TYPE = 'type'
         KEYWORD_ENUM = 'enum'
 
-        MODEL_BLOCK_ATTRIBUTE_NAME = 'regexp:@@[a-z]+'
-        MODEL_FIELD_ATTRIBUTE_NAME = 'regexp:@[a-z]+'
+        MODEL_BLOCK_ATTRIBUTE_NAME = 'regexp:@@[a-zA-Z]+'
+        MODEL_FIELD_ATTRIBUTE_NAME = 'regexp:@[a-zA-Z]+'
 
         ENTITY_NAME
         FUNCTION_NAME
