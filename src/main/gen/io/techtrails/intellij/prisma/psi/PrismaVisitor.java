@@ -11,6 +11,10 @@ public class PrismaVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitAttributeArgValue(@NotNull PrismaAttributeArgValue o) {
+    visitPsiElement(o);
+  }
+
   public void visitBlock(@NotNull PrismaBlock o) {
     visitPsiElement(o);
   }

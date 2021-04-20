@@ -31,7 +31,7 @@ model Profile {
   user    User    @relation(fields: [userId], references: [id])
   userId  Int
 
-  @@unique([userId])
+  @@unique([id, userId])
 }
 
 model Post {

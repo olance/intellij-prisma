@@ -10,14 +10,14 @@ public interface PrismaEnumBlockStatement extends PsiElement {
   @NotNull
   List<PrismaAttributeArgName> getAttributeArgNameList();
 
+  @NotNull
+  List<PrismaAttributeArgValue> getAttributeArgValueList();
+
   @Nullable
   PrismaEnumConstant getEnumConstant();
 
   @Nullable
   PrismaEnumConstantValue getEnumConstantValue();
-
-  @NotNull
-  List<PrismaIdentifier> getIdentifierList();
 
   @Nullable
   PsiElement getModelBlockAttributeName();

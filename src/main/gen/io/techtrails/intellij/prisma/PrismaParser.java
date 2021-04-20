@@ -111,17 +111,19 @@ public class PrismaParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // attribute-arg-value-scalar | attribute-arg-value-array | model-function
-  static boolean attribute_arg_value(PsiBuilder b, int l) {
+  public static boolean attribute_arg_value(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "attribute_arg_value")) return false;
     boolean r;
+    Marker m = enter_section_(b, l, _NONE_, ATTRIBUTE_ARG_VALUE, "<attribute arg value>");
     r = attribute_arg_value_scalar(b, l + 1);
     if (!r) r = attribute_arg_value_array(b, l + 1);
     if (!r) r = model_function(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
   /* ********************************************************** */
-  // '[' (attribute-arg-value-scalar | attribute-arg-value-array (',' attribute-arg-value-scalar | attribute-arg-value-array)*)? ']'
+  // '[' (attribute-arg-value-array-item (',' attribute-arg-value-array-item)*)? ']'
   static boolean attribute_arg_value_array(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "attribute_arg_value_array")) return false;
     if (!nextTokenIs(b, L_BRACKET)) return false;
@@ -134,65 +136,53 @@ public class PrismaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // (attribute-arg-value-scalar | attribute-arg-value-array (',' attribute-arg-value-scalar | attribute-arg-value-array)*)?
+  // (attribute-arg-value-array-item (',' attribute-arg-value-array-item)*)?
   private static boolean attribute_arg_value_array_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "attribute_arg_value_array_1")) return false;
     attribute_arg_value_array_1_0(b, l + 1);
     return true;
   }
 
-  // attribute-arg-value-scalar | attribute-arg-value-array (',' attribute-arg-value-scalar | attribute-arg-value-array)*
+  // attribute-arg-value-array-item (',' attribute-arg-value-array-item)*
   private static boolean attribute_arg_value_array_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "attribute_arg_value_array_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = attribute_arg_value_scalar(b, l + 1);
-    if (!r) r = attribute_arg_value_array_1_0_1(b, l + 1);
+    r = attribute_arg_value_array_item(b, l + 1);
+    r = r && attribute_arg_value_array_1_0_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // attribute-arg-value-array (',' attribute-arg-value-scalar | attribute-arg-value-array)*
+  // (',' attribute-arg-value-array-item)*
   private static boolean attribute_arg_value_array_1_0_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "attribute_arg_value_array_1_0_1")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = attribute_arg_value_array(b, l + 1);
-    r = r && attribute_arg_value_array_1_0_1_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // (',' attribute-arg-value-scalar | attribute-arg-value-array)*
-  private static boolean attribute_arg_value_array_1_0_1_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "attribute_arg_value_array_1_0_1_1")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!attribute_arg_value_array_1_0_1_1_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "attribute_arg_value_array_1_0_1_1", c)) break;
+      if (!attribute_arg_value_array_1_0_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "attribute_arg_value_array_1_0_1", c)) break;
     }
     return true;
   }
 
-  // ',' attribute-arg-value-scalar | attribute-arg-value-array
-  private static boolean attribute_arg_value_array_1_0_1_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "attribute_arg_value_array_1_0_1_1_0")) return false;
+  // ',' attribute-arg-value-array-item
+  private static boolean attribute_arg_value_array_1_0_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "attribute_arg_value_array_1_0_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = attribute_arg_value_array_1_0_1_1_0_0(b, l + 1);
-    if (!r) r = attribute_arg_value_array(b, l + 1);
+    r = consumeToken(b, COMMA);
+    r = r && attribute_arg_value_array_item(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // ',' attribute-arg-value-scalar
-  private static boolean attribute_arg_value_array_1_0_1_1_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "attribute_arg_value_array_1_0_1_1_0_0")) return false;
+  /* ********************************************************** */
+  // attribute-arg-value-scalar | attribute-arg-value-array
+  static boolean attribute_arg_value_array_item(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "attribute_arg_value_array_item")) return false;
     boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, COMMA);
-    r = r && attribute_arg_value_scalar(b, l + 1);
-    exit_section_(b, m, null, r);
+    r = attribute_arg_value_scalar(b, l + 1);
+    if (!r) r = attribute_arg_value_array(b, l + 1);
     return r;
   }
 

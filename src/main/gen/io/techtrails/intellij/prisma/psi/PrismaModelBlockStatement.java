@@ -10,14 +10,14 @@ public interface PrismaModelBlockStatement extends PsiElement {
   @NotNull
   List<PrismaAttributeArgName> getAttributeArgNameList();
 
+  @NotNull
+  List<PrismaAttributeArgValue> getAttributeArgValueList();
+
   @Nullable
   PrismaFieldName getFieldName();
 
   @Nullable
   PrismaFieldType getFieldType();
-
-  @NotNull
-  List<PrismaIdentifier> getIdentifierList();
 
   @Nullable
   PsiElement getModelBlockAttributeName();

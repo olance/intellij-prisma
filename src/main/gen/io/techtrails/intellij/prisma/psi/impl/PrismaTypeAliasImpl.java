@@ -34,15 +34,15 @@ public class PrismaTypeAliasImpl extends PrismaBlockImpl implements PrismaTypeAl
   }
 
   @Override
-  @Nullable
-  public PrismaFieldType getFieldType() {
-    return findChildByClass(PrismaFieldType.class);
+  @NotNull
+  public List<PrismaAttributeArgValue> getAttributeArgValueList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PrismaAttributeArgValue.class);
   }
 
   @Override
-  @NotNull
-  public List<PrismaIdentifier> getIdentifierList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PrismaIdentifier.class);
+  @Nullable
+  public PrismaFieldType getFieldType() {
+    return findChildByClass(PrismaFieldType.class);
   }
 
   @Override

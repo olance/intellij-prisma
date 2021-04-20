@@ -34,6 +34,12 @@ public class PrismaEnumBlockStatementImpl extends ASTWrapperPsiElement implement
   }
 
   @Override
+  @NotNull
+  public List<PrismaAttributeArgValue> getAttributeArgValueList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, PrismaAttributeArgValue.class);
+  }
+
+  @Override
   @Nullable
   public PrismaEnumConstant getEnumConstant() {
     return findChildByClass(PrismaEnumConstant.class);
@@ -43,12 +49,6 @@ public class PrismaEnumBlockStatementImpl extends ASTWrapperPsiElement implement
   @Nullable
   public PrismaEnumConstantValue getEnumConstantValue() {
     return findChildByClass(PrismaEnumConstantValue.class);
-  }
-
-  @Override
-  @NotNull
-  public List<PrismaIdentifier> getIdentifierList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PrismaIdentifier.class);
   }
 
   @Override

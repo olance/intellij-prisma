@@ -10,11 +10,11 @@ public interface PrismaTypeAlias extends PrismaBlock {
   @NotNull
   List<PrismaAttributeArgName> getAttributeArgNameList();
 
+  @NotNull
+  List<PrismaAttributeArgValue> getAttributeArgValueList();
+
   @Nullable
   PrismaFieldType getFieldType();
-
-  @NotNull
-  List<PrismaIdentifier> getIdentifierList();
 
   @Nullable
   PrismaTypeName getTypeName();

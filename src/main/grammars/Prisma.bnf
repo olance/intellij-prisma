@@ -86,9 +86,10 @@ private field-attribute ::= MODEL_FIELD_ATTRIBUTE_NAME attribute-args?
 private model-attribute ::= MODEL_BLOCK_ATTRIBUTE_NAME attribute-args?
 private attribute-args ::= '(' attribute-arg-name? attribute-arg-value (',' attribute-arg-name attribute-arg-value)* ')' { pin(".*")=2 }
 attribute-arg-name ::= ENTITY_NAME ':'
-private attribute-arg-value ::= attribute-arg-value-scalar | attribute-arg-value-array | model-function
+attribute-arg-value ::= attribute-arg-value-scalar | attribute-arg-value-array | model-function
 private attribute-arg-value-scalar ::= STRING | NUMBER | BOOLEAN | identifier
-private attribute-arg-value-array ::= '[' (attribute-arg-value-scalar | attribute-arg-value-array (',' attribute-arg-value-scalar | attribute-arg-value-array)*)? ']'
+private attribute-arg-value-array-item ::= attribute-arg-value-scalar | attribute-arg-value-array
+private attribute-arg-value-array ::= '[' (attribute-arg-value-array-item (',' attribute-arg-value-array-item)*)? ']'
 private model-function ::= FUNCTION_NAME '(' ')'
 
 enum-constant ::= ENTITY_NAME

@@ -9,6 +9,7 @@ import io.techtrails.intellij.prisma.psi.impl.*;
 public interface PrismaTypes {
 
   IElementType ATTRIBUTE_ARG_NAME = new PrismaElementType("ATTRIBUTE_ARG_NAME");
+  IElementType ATTRIBUTE_ARG_VALUE = new PrismaElementType("ATTRIBUTE_ARG_VALUE");
   IElementType BLOCK = new PrismaElementType("BLOCK");
   IElementType BLOCK_NAME = new PrismaElementType("BLOCK_NAME");
   IElementType CONFIG_BLOCK = new PrismaElementType("CONFIG_BLOCK");
@@ -58,6 +59,9 @@ public interface PrismaTypes {
       IElementType type = node.getElementType();
       if (type == ATTRIBUTE_ARG_NAME) {
         return new PrismaAttributeArgNameImpl(node);
+      }
+      else if (type == ATTRIBUTE_ARG_VALUE) {
+        return new PrismaAttributeArgValueImpl(node);
       }
       else if (type == BLOCK_NAME) {
         return new PrismaBlockNameImpl(node);

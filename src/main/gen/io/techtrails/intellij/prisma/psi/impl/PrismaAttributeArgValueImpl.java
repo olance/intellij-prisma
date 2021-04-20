@@ -11,14 +11,14 @@ import static io.techtrails.intellij.prisma.psi.PrismaTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import io.techtrails.intellij.prisma.psi.*;
 
-public class PrismaModelBlockStatementImpl extends ASTWrapperPsiElement implements PrismaModelBlockStatement {
+public class PrismaAttributeArgValueImpl extends ASTWrapperPsiElement implements PrismaAttributeArgValue {
 
-  public PrismaModelBlockStatementImpl(@NotNull ASTNode node) {
+  public PrismaAttributeArgValueImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PrismaVisitor visitor) {
-    visitor.visitModelBlockStatement(this);
+    visitor.visitAttributeArgValue(this);
   }
 
   @Override
@@ -28,33 +28,33 @@ public class PrismaModelBlockStatementImpl extends ASTWrapperPsiElement implemen
   }
 
   @Override
-  @NotNull
-  public List<PrismaAttributeArgName> getAttributeArgNameList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PrismaAttributeArgName.class);
-  }
-
-  @Override
-  @NotNull
-  public List<PrismaAttributeArgValue> getAttributeArgValueList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, PrismaAttributeArgValue.class);
+  @Nullable
+  public PrismaIdentifier getIdentifier() {
+    return findChildByClass(PrismaIdentifier.class);
   }
 
   @Override
   @Nullable
-  public PrismaFieldName getFieldName() {
-    return findChildByClass(PrismaFieldName.class);
+  public PsiElement getBoolean() {
+    return findChildByType(BOOLEAN);
   }
 
   @Override
   @Nullable
-  public PrismaFieldType getFieldType() {
-    return findChildByClass(PrismaFieldType.class);
+  public PsiElement getFunctionName() {
+    return findChildByType(FUNCTION_NAME);
   }
 
   @Override
   @Nullable
-  public PsiElement getModelBlockAttributeName() {
-    return findChildByType(MODEL_BLOCK_ATTRIBUTE_NAME);
+  public PsiElement getNumber() {
+    return findChildByType(NUMBER);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getString() {
+    return findChildByType(STRING);
   }
 
 }
