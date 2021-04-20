@@ -1,6 +1,6 @@
 plugins {
-    id("org.jetbrains.intellij") version "0.4.18"
-    kotlin("jvm") version "1.3.72"
+    id("org.jetbrains.intellij") version "0.7.2"
+    kotlin("jvm") version "1.4.32"
 }
 
 group = "io.techtrails.intellij"
