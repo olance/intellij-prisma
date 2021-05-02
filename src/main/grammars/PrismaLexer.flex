@@ -31,7 +31,7 @@ NUMBER=((0(x|X)[0-9a-fA-F]*)|(\+|-)?(([0-9]+\.?[0-9]*)|(\.[0-9]+))((e|E)(\+|-)?[
 TRIPLE_COMMENT="///".*
 DOUBLE_COMMENT="//".*
 MODEL_BLOCK_ATTRIBUTE_NAME=@@[a-zA-Z]+
-MODEL_FIELD_ATTRIBUTE_NAME=@[a-zA-Z]+
+MODEL_FIELD_ATTRIBUTE_NAME=@[a-zA-Z\.]+
 ENTITY_NAME=[A-Za-z][a-zA-Z_0-9]*
 FUNCTION_NAME=[a-zA-Z]+
 
