@@ -1,5 +1,6 @@
 <idea-plugin>
     <id>io.techtrails.intellij.prisma</id>
+    <idea-version since-build="201.3119"/>
     <name>Prisma Support</name>
     <vendor email="olivier@techtrails.io" url="http://www.techtrails.io">Techtrails</vendor>
 

@@ -21,6 +21,8 @@ intellij {
     val ideaVersion: String by project
     version = ideaVersion
     pluginName = rootProject.name
+
+    updateSinceUntilBuild = false
 }
 
 sourceSets["main"].java.srcDir("src/main/gen")
@@ -32,11 +34,6 @@ tasks.withType<JavaCompile> {
 
 tasks {
     patchPluginXml {
-        val pluginSinceBuild: String by project
-        val pluginUntilBuild: String by project
-
-        sinceBuild(pluginSinceBuild)
-        untilBuild(pluginUntilBuild)
     }
 
     compileKotlin {
