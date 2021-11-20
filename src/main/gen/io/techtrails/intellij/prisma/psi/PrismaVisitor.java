@@ -43,10 +43,6 @@ public class PrismaVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitEnumConstantValue(@NotNull PrismaEnumConstantValue o) {
-    visitPsiElement(o);
-  }
-
   public void visitFieldName(@NotNull PrismaFieldName o) {
     visitPsiElement(o);
   }

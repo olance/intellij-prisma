@@ -17,9 +17,6 @@ public interface PrismaEnumBlockStatement extends PsiElement {
   PrismaEnumConstant getEnumConstant();
 
   @Nullable
-  PrismaEnumConstantValue getEnumConstantValue();
-
-  @Nullable
   PsiElement getModelBlockAttributeName();
 
   @Nullable

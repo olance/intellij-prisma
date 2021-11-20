@@ -93,6 +93,5 @@ private attribute-arg-value-array ::= '[' (attribute-arg-value-array-item (',' a
 private model-function ::= FUNCTION_NAME '(' ')'
 
 enum-constant ::= ENTITY_NAME
-enum-constant-value ::= STRING
-private enum-constant-definition ::= enum-constant ('=' enum-constant-value | field-attribute)? { pin(".*")=1 }
+private enum-constant-definition ::= enum-constant field-attribute? { pin(".*")=1 }
 enum-block-statement ::= enum-constant-definition | model-attribute

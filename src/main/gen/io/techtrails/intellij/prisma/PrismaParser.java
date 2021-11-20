@@ -467,7 +467,7 @@ public class PrismaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // enum-constant ('=' enum-constant-value | field-attribute)?
+  // enum-constant field-attribute?
   static boolean enum_constant_definition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_constant_definition")) return false;
     if (!nextTokenIs(b, ENTITY_NAME)) return false;
@@ -480,46 +480,11 @@ public class PrismaParser implements PsiParser, LightPsiParser {
     return r || p;
   }
 
-  // ('=' enum-constant-value | field-attribute)?
+  // field-attribute?
   private static boolean enum_constant_definition_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_constant_definition_1")) return false;
-    enum_constant_definition_1_0(b, l + 1);
+    field_attribute(b, l + 1);
     return true;
-  }
-
-  // '=' enum-constant-value | field-attribute
-  private static boolean enum_constant_definition_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "enum_constant_definition_1_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = enum_constant_definition_1_0_0(b, l + 1);
-    if (!r) r = field_attribute(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // '=' enum-constant-value
-  private static boolean enum_constant_definition_1_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "enum_constant_definition_1_0_0")) return false;
-    boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_);
-    r = consumeToken(b, EQ);
-    p = r; // pin = 1
-    r = r && enum_constant_value(b, l + 1);
-    exit_section_(b, l, m, r, p, null);
-    return r || p;
-  }
-
-  /* ********************************************************** */
-  // STRING
-  public static boolean enum_constant_value(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "enum_constant_value")) return false;
-    if (!nextTokenIs(b, STRING)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, STRING);
-    exit_section_(b, m, ENUM_CONSTANT_VALUE, r);
-    return r;
   }
 
   /* ********************************************************** */

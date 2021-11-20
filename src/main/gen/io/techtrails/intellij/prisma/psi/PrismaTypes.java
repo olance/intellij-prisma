@@ -17,7 +17,6 @@ public interface PrismaTypes {
   IElementType ENUM_BLOCK = new PrismaElementType("ENUM_BLOCK");
   IElementType ENUM_BLOCK_STATEMENT = new PrismaElementType("ENUM_BLOCK_STATEMENT");
   IElementType ENUM_CONSTANT = new PrismaElementType("ENUM_CONSTANT");
-  IElementType ENUM_CONSTANT_VALUE = new PrismaElementType("ENUM_CONSTANT_VALUE");
   IElementType FIELD_NAME = new PrismaElementType("FIELD_NAME");
   IElementType FIELD_TYPE = new PrismaElementType("FIELD_TYPE");
   IElementType FIELD_VALUE = new PrismaElementType("FIELD_VALUE");
@@ -80,9 +79,6 @@ public interface PrismaTypes {
       }
       else if (type == ENUM_CONSTANT) {
         return new PrismaEnumConstantImpl(node);
-      }
-      else if (type == ENUM_CONSTANT_VALUE) {
-        return new PrismaEnumConstantValueImpl(node);
       }
       else if (type == FIELD_NAME) {
         return new PrismaFieldNameImpl(node);

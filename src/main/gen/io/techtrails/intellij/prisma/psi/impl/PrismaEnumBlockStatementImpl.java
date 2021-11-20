@@ -47,12 +47,6 @@ public class PrismaEnumBlockStatementImpl extends ASTWrapperPsiElement implement
 
   @Override
   @Nullable
-  public PrismaEnumConstantValue getEnumConstantValue() {
-    return findChildByClass(PrismaEnumConstantValue.class);
-  }
-
-  @Override
-  @Nullable
   public PsiElement getModelBlockAttributeName() {
     return findChildByType(MODEL_BLOCK_ATTRIBUTE_NAME);
   }

@@ -54,7 +54,7 @@ model Category {
 
 enum Role {
   USER  @map("user")
-  ADMIN = "admin"
+  ADMIN
 
   @@map("_Role")
 }
