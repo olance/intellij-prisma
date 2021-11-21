@@ -22,6 +22,22 @@
     ]]></description>
 
     <change-notes><![CDATA[
+      <b>v1.0.4</b>
+      <ul>
+        <li>Chore: review & fix plugin metadata so that it stops becoming "incompatible" at each new IDE version</li>
+        <li>
+            Fixes: `type` mode field name being recognized as a root-level `type` alias block — thanks
+            <a href="https://github.com/binary64">@binary64</a> for the report!
+        </li>
+        <li>
+            Fixes: support for DB native types (@db.VarChar & all) - thanks <a href="https://github.com/JarekToro">@JarekToro</a>!
+        </li>
+        <li>
+            Fixes: non-JS client generator provider string being incorrectly parsed – thanks
+            <a href="https://github.com/steebchen">@steebchen</a> for the report!
+        </li>
+      </ul>
+
       <b>v1.0.3</b>
       <ul>
         <li>Chore: upgrade supported versions range for 2021 IDEs</li>
