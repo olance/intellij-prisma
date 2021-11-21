@@ -1,50 +1,49 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+fun properties(key: String) = project.findProperty(key).toString()
+
 plugins {
-    id("org.jetbrains.intellij") version "0.7.2"
-    kotlin("jvm") version "1.4.32"
+    id("org.jetbrains.intellij") version "1.3.0"
+    id("org.jetbrains.kotlin.jvm") version "1.6.0"
 }
 
-group = "io.techtrails.intellij"
-
-val pluginVersion: String by project
-version = pluginVersion
+group = properties("pluginGroup")
+version = properties("pluginVersion")
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.0")
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    val ideaVersion: String by project
-    version = ideaVersion
-    pluginName = rootProject.name
-
-    updateSinceUntilBuild = false
+    pluginName.set(properties("pluginName"))
+    version.set(properties("platformVersion"))
+    updateSinceUntilBuild.set(false)
 }
 
 sourceSets["main"].java.srcDir("src/main/gen")
 
-tasks.withType<JavaCompile> {
-    sourceCompatibility = "1.8"
-    targetCompatibility = "1.8"
-}
-
 tasks {
-    patchPluginXml {
+    // Set the JVM compatibility versions
+    properties("javaVersion").let {
+        withType<JavaCompile> {
+            sourceCompatibility = it
+            targetCompatibility = it
+        }
+        withType<KotlinCompile> {
+            kotlinOptions.jvmTarget = it
+        }
     }
 
-    compileKotlin {
-        kotlinOptions.jvmTarget = "1.8"
-    }
-    compileTestKotlin {
-        kotlinOptions.jvmTarget = "1.8"
+    wrapper {
+        gradleVersion = properties("gradleVersion")
     }
 
     publishPlugin {
-        val intellijPublishToken: String by project
-        token(intellijPublishToken)
+        token.set(properties("intellijPublishToken"))
     }
 }
